@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЭЛИТ БРУСЧАТКА | Павлодар</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "@google/model-viewer": "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"
+            }
+        }
+    </script>
+    <script type="module">
+        import '@google/model-viewer';
+    </script>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <header>
+        <div class="container">
+            <div class="logo">ЭЛИТ БРУСЧАТКА</div>
+            <nav>
+                <a href="#">О нас</a>
+                <a href="#">Каталог</a>
+                <a href="#">Проекты</a>
+                <a href="#">Этапы работ</a>
+                <a href="#">Контакты</a>
+            </nav>
+            <div class="phone">+7 (700) 000-00-00</div>
+        </div>
+    </header>
+    <main>
+        <div class="hero container">
+            <div class="hero-text">
+                <span class="badge">ПРЕМИАЛЬНАЯ БРУСЧАТКА ДЛЯ ЧАСТНЫХ ДОМОВ И БИЗНЕСА</span>
+                <h1>Брусчатка, которая делает участок <span class="gold">дорогим</span> с первого взгляда</h1>
+                <p>Подберём стиль, цвет и формат под ваш двор, дорожки, парковку или террасу. Поставка, расчёт и укладка под ключ.</p>
+                <button class="btn-primary" id="catalogBtn">Смотреть каталог →</button>
+            </div>
+            <div class="hero-3d">
+                <model-viewer src="https://threejs.org/examples/models/gltf/Flamingo/glTF/Flamingo.gltf" alt="3D модель" camera-controls auto-rotate rotation-per-second="15deg" style="width:100%; height:450px;"></model-viewer>
+                <p class="hint">Вращайте мышкой / пальцем</p>
+            </div>
+        </div>
+        <div class="stats container">
+            <div class="stat-item"><div class="stat-number" data-target="150">0</div><div class="stat-label">реализованных объектов</div></div>
+            <div class="stat-item"><div class="stat-number" data-target="7">0 <span>лет</span></div><div class="stat-label">опыта в укладке</div></div>
+            <div class="stat-item"><div class="stat-number" data-target="2417">0</div><div class="stat-label">консультации и расчёта</div></div>
+        </div>
+        <div class="projects container">
+            <h2>Наши проекты в Павлодаре</h2>
+            <p class="section-subtitle">Свежие объекты 2024–2025</p>
+            <div class="gallery">
+                <div class="gallery-item"><img src="images/project1.jpg" alt="Частный дом"><div class="gallery-overlay">мкр. Достык</div></div>
+                <div class="gallery-item"><img src="images/project2.jpg" alt="Парковка"><div class="gallery-overlay">ТЦ Баян Сулу</div></div>
+                <div class="gallery-item"><img src="images/project3.jpg" alt="Дорожка"><div class="gallery-overlay">ул. Лермонтова</div></div>
+                <div class="gallery-item"><img src="images/project4.jpg" alt="Текстура"><div class="gallery-overlay">Старый город</div></div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>© 2025 ЭЛИТ БРУСЧАТКА — Павлодар. Все права защищены.</p>
+            <p>Свяжитесь с нами: <a href="tel:+77000000000">+7 (700) 000-00-00</a> | <a href="#">WhatsApp</a></p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
