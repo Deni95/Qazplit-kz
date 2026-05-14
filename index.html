@@ -3,69 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ЭЛИТ БРУСЧАТКА | Павлодар</title>
+    <title>ЭлитБрусчатка | Премиальная брусчатка в Павлодаре</title>
     <link rel="stylesheet" href="style.css">
-    <script type="importmap">
-        {
-            "imports": {
-                "@google/model-viewer": "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"
-            }
-        }
-    </script>
-    <script type="module">
-        import '@google/model-viewer';
-    </script>
 </head>
 <body>
-    <div class="bg-overlay"></div>
-    <header>
+
+    <!-- HERO блок с заголовком -->
+    <div class="hero">
         <div class="container">
-            <div class="logo">ЭЛИТ БРУСЧАТКА</div>
-            <nav>
-                <a href="#">О нас</a>
-                <a href="#">Каталог</a>
-                <a href="#">Проекты</a>
-                <a href="#">Этапы работ</a>
-                <a href="#">Контакты</a>
-            </nav>
-            <div class="phone">+7 (700) 000-00-00</div>
+            <h1>Брусчатка, которая делает участок <span class="gold">дорогим</span> с первого взгляда</h1>
+            <p class="subtitle">Премиальная брусчатка для частных домов и бизнеса в Павлодаре</p>
+            <a href="#catalog" class="btn">Смотреть каталог</a>
         </div>
-    </header>
-    <main>
-        <div class="hero container">
-            <div class="hero-text">
-                <span class="badge">ПРЕМИАЛЬНАЯ БРУСЧАТКА ДЛЯ ЧАСТНЫХ ДОМОВ И БИЗНЕСА</span>
-                <h1>Брусчатка, которая делает участок <span class="gold">дорогим</span> с первого взгляда</h1>
-                <p>Подберём стиль, цвет и формат под ваш двор, дорожки, парковку или террасу. Поставка, расчёт и укладка под ключ.</p>
-                <button class="btn-primary" id="catalogBtn">Смотреть каталог →</button>
-            </div>
-            <div class="hero-3d">
-                <model-viewer src="https://threejs.org/examples/models/gltf/Flamingo/glTF/Flamingo.gltf" alt="3D модель" camera-controls auto-rotate rotation-per-second="15deg" style="width:100%; height:450px;"></model-viewer>
-                <p class="hint">Вращайте мышкой / пальцем</p>
-            </div>
-        </div>
-        <div class="stats container">
-            <div class="stat-item"><div class="stat-number" data-target="150">0</div><div class="stat-label">реализованных объектов</div></div>
-            <div class="stat-item"><div class="stat-number" data-target="7">0 <span>лет</span></div><div class="stat-label">опыта в укладке</div></div>
-            <div class="stat-item"><div class="stat-number" data-target="2417">0</div><div class="stat-label">консультации и расчёта</div></div>
-        </div>
-        <div class="projects container">
-            <h2>Наши проекты в Павлодаре</h2>
-            <p class="section-subtitle">Свежие объекты 2024–2025</p>
-            <div class="gallery">
-                <div class="gallery-item"><img src="images/project1.jpg" alt="Частный дом"><div class="gallery-overlay">мкр. Достык</div></div>
-                <div class="gallery-item"><img src="images/project2.jpg" alt="Парковка"><div class="gallery-overlay">ТЦ Баян Сулу</div></div>
-                <div class="gallery-item"><img src="images/project3.jpg" alt="Дорожка"><div class="gallery-overlay">ул. Лермонтова</div></div>
-                <div class="gallery-item"><img src="images/project4.jpg" alt="Текстура"><div class="gallery-overlay">Старый город</div></div>
-            </div>
-        </div>
-    </main>
-    <footer>
+    </div>
+
+    <!-- Блок преимуществ -->
+    <div class="benefits">
         <div class="container">
-            <p>© 2025 ЭЛИТ БРУСЧАТКА — Павлодар. Все права защищены.</p>
-            <p>Свяжитесь с нами: <a href="tel:+77000000000">+7 (700) 000-00-00</a> | <a href="#">WhatsApp</a></p>
+            <div class="benefit-item">
+                <div class="benefit-number">150+</div>
+                <p>реализованных объектов</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-number">7 лет</div>
+                <p>опыта в укладке</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-number">24/7</div>
+                <p>консультация и расчёт</p>
+            </div>
         </div>
-    </footer>
+    </div>
+
+    <!-- Блок "О компании" -->
+    <div class="about">
+        <div class="container">
+            <h2>Создаём покрытие, которое выглядит солидно и служит долго</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Мы продаём и укладываем брусчатку для дворов, дорожек, парковок, террас и коммерческих территорий. Работаем в современном и классическом стилях, делаем визуально дорого и аккуратно.</p>
+                    <p>Даже если у вас пока нет точного проекта, мы поможем подобрать формат, цвет, толщину и схему укладки под ваш участок.</p>
+                    <ul class="about-list">
+                        <li>✔ Бесплатная первичная консультация</li>
+                        <li>✔ Подбор дизайна под фасад дома</li>
+                        <li>✔ Расчёт количества материала</li>
+                        <li>✔ Монтаж и благоустройство участка</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/500x400?text=Ваше+фото" alt="Пример работы">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок каталога с карточками товаров -->
+    <div id="catalog" class="catalog">
+        <div class="container">
+            <h2>Наши решения</h2>
+            <div class="catalog-grid">
+                <div class="catalog-card">
+                    <h3>Классическая брусчатка</h3>
+                    <p>Идеально подходит для дворов, дорожек и площадок возле дома.</p>
+                    <div class="price">от 8 500 ₸/м²</div>
+                    <a href="#contact" class="btn-small">Заказать</a>
+                </div>
+                <div class="catalog-card">
+                    <h3>Премиум плитка для парковки</h3>
+                    <p>Усиленное решение для въездной группы и зоны автомобиля.</p>
+                    <div class="price">от 10 500 ₸/м²</div>
+                    <a href="#contact" class="btn-small">Заказать</a>
+                </div>
+                <div class="catalog-card">
+                    <h3>Дизайнерская коллекция</h3>
+                    <p>Для тех, кто хочет эффектный рисунок и благородный внешний вид.</p>
+                    <div class="price">от 12 000 ₸/м²</div>
+                    <a href="#contact" class="btn-small">Заказать</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок с этапами работ -->
+    <div class="steps">
+        <div class="container">
+            <h2>Понятный путь от заявки до готового участка</h2>
+            <div class="steps-grid">
+                <div class="step-item">01<br><span>Заявка</span><br><small>Вы оставляете заявку, мы связываемся и уточняем задачу.</small></div>
+                <div class="step-item">02<br><span>Подбор</span><br><small>Подбираем коллекцию, цвет, толщину и рассчитываем объём.</small></div>
+                <div class="step-item">03<br><span>Согласование</span><br><small>Утверждаем стоимость, сроки и формат выполнения работ.</small></div>
+                <div class="step-item">04<br><span>Монтаж</span><br><small>Выполняем укладку аккуратно, быстро и с контролем качества.</small></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Контактный блок -->
+    <div id="contact" class="contact">
+        <div class="container">
+            <h2>Оставьте заявку и получите расчёт стоимости</h2>
+            <p>Заполните форму, и мы свяжемся с вами для консультации.</p>
+            <form class="contact-form" action="#" method="post">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="tel" name="phone" placeholder="Ваш телефон" required>
+                <button type="submit" class="btn">Отправить заявку</button>
+            </form>
+            <div class="contact-note">
+                <p>+7 (700) 000-00-00 | WhatsApp | Telegram</p>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
