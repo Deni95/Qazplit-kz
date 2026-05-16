@@ -23,4 +23,23 @@
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
 </body>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (window.location.hash.includes("confirmation_token")) {
+        window.netlifyIdentity.open("signup");
+      }
+
+      if (window.location.hash.includes("recovery_token")) {
+        window.netlifyIdentity.open("login");
+      }
+    });
+
+    window.netlifyIdentity.on("login", () => {
+      window.location.href = "/admin/";
+    });
+  }
+</script>
 </html>
