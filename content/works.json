@@ -3,7 +3,14 @@
     {
       "title": "Двор частного дома",
       "description": "Укладка брусчатки под ключ в Павлодаре.",
-      "image": "/uploads/work-1.jpg"
+      "image": "/uploads/work-1.jpg",
+      "active": true
+    },
+    {
+      "title": "Парковочная зона",
+      "description": "Прочная укладка под автомобильную нагрузку.",
+      "image": "/uploads/work-2.jpg",
+      "active": true
     }
   ]
 }
