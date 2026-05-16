@@ -6,89 +6,72 @@ media_folder: "uploads"
 public_folder: "/uploads"
 
 collections:
-
-# Главная страница
   - name: "homepage"
     label: "Главная страница"
-
     files:
       - file: "content/home.json"
         label: "Настройки сайта"
         name: "home"
-
         fields:
-
           - label: "Название фирмы"
             name: "company"
             widget: "string"
-
           - label: "Главный заголовок"
             name: "title"
             widget: "string"
-
           - label: "Описание"
             name: "subtitle"
             widget: "text"
-
           - label: "Фоновое фото"
             name: "hero"
             widget: "image"
-
+            required: false
           - label: "Телефон"
             name: "phone"
             widget: "string"
-
           - label: "WhatsApp"
             name: "whatsapp"
             widget: "string"
-
           - label: "Логотип"
             name: "logo"
             widget: "image"
-
-# Каталог
+            required: false
 
   - name: "products"
-
     label: "Каталог"
-
     files:
       - file: "content/products.json"
-
         label: "Товары"
-
         name: "products"
-
         fields:
-
           - label: "Товары"
-
             name: "items"
-
             widget: "list"
-
             fields:
-
-              - {label: "Название", name: "name", widget: "string"}
-
-              - {label: "Цена", name: "price", widget: "string"}
-
-              - {label: "Описание", name: "description", widget: "text"}
-
-              - {label: "Фото", name: "image", widget: "image"}
-
-# Наши работы
+              - label: "Название"
+                name: "name"
+                widget: "string"
+              - label: "Цена"
+                name: "price"
+                widget: "string"
+              - label: "Описание"
+                name: "description"
+                widget: "text"
+              - label: "Фото"
+                name: "image"
+                widget: "image"
 
   - name: "works"
-
     label: "Наши работы"
-
     folder: "content/works"
-
     create: true
-
     fields:
-
-      - {label:"Фото",name:"image",widget:"image"}
-
-      - {label:"Описание",name:"body",widget:"text"}
+      - label: "Название работы"
+        name: "title"
+        widget: "string"
+      - label: "Фото"
+        name: "image"
+        widget: "image"
+      - label: "Описание"
+        name: "body"
+        widget: "text"
