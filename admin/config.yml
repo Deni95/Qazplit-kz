@@ -5,21 +5,23 @@ backend:
 site_url: https://qazzplitt.netlify.app
 display_url: https://qazzplitt.netlify.app
 
-logo_url: /logo.png
-
 media_folder: "uploads"
 public_folder: "/uploads"
 
 collections:
   - name: products
-    label: Каталог
-
+    label: "Каталог брусчатки"
     files:
-      - file: content/products.json
-        label: Товары
-        name: products
-
+      - file: "content/products.json"
+        label: "Товары"
+        name: "products"
         fields:
-          - label: Товары
-            name: items
-            widget: list
+          - label: "Товары"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.price}}"
+            fields:
+              - { label: "Название", name: "name", widget: "string" }
+              - { label: "Описание", name: "description", widget: "text" }
+              - { label: "Цена", name: "price", widget: "string" }
+              - { label: "Фото", name: "image", widget: "image" }
