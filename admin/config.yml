@@ -7,71 +7,89 @@ public_folder: "/uploads"
 
 collections:
   - name: "homepage"
-    label: "Главная страница"
+    label: "1. Главная страница"
     files:
       - file: "content/home.json"
-        label: "Настройки сайта"
+        label: "Текст и контакты"
         name: "home"
         fields:
           - label: "Название фирмы"
             name: "company"
             widget: "string"
+
           - label: "Главный заголовок"
             name: "title"
             widget: "string"
-          - label: "Описание"
+
+          - label: "Описание под заголовком"
             name: "subtitle"
             widget: "text"
+
           - label: "Фоновое фото"
             name: "hero"
             widget: "image"
             required: false
+
           - label: "Телефон"
             name: "phone"
             widget: "string"
+
           - label: "WhatsApp"
             name: "whatsapp"
             widget: "string"
-          - label: "Логотип"
-            name: "logo"
-            widget: "image"
-            required: false
+
+          - label: "Город"
+            name: "city"
+            widget: "string"
 
   - name: "products"
-    label: "Каталог"
+    label: "2. Каталог брусчатки"
     files:
       - file: "content/products.json"
         label: "Товары"
         name: "products"
         fields:
-          - label: "Товары"
+          - label: "Список товаров"
             name: "items"
             widget: "list"
+            summary: "{{fields.name}} — {{fields.price}}"
             fields:
-              - label: "Название"
+              - label: "Название товара"
                 name: "name"
                 widget: "string"
+
               - label: "Цена"
                 name: "price"
                 widget: "string"
+
               - label: "Описание"
                 name: "description"
                 widget: "text"
-              - label: "Фото"
+
+              - label: "Фото товара"
                 name: "image"
                 widget: "image"
 
   - name: "works"
-    label: "Наши работы"
-    folder: "content/works"
-    create: true
-    fields:
-      - label: "Название работы"
-        name: "title"
-        widget: "string"
-      - label: "Фото"
-        name: "image"
-        widget: "image"
-      - label: "Описание"
-        name: "body"
-        widget: "text"
+    label: "3. Наши работы"
+    files:
+      - file: "content/works.json"
+        label: "Фото выполненных работ"
+        name: "works"
+        fields:
+          - label: "Список работ"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - label: "Название работы"
+                name: "title"
+                widget: "string"
+
+              - label: "Описание"
+                name: "description"
+                widget: "text"
+
+              - label: "Фото"
+                name: "image"
+                widget: "image"
