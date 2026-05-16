@@ -2,171 +2,112 @@ backend:
   name: git-gateway
   branch: main
 
+site_url: https://qazplittpvl.netlify.app
+display_url: https://qazplittpvl.netlify.app
+
 media_folder: "uploads"
 public_folder: "/uploads"
 
 collections:
+
   - name: "site"
     label: "1. Настройки сайта"
+
     files:
       - file: "content/site.json"
-        label: "Основная информация"
+        label: "Главная страница"
         name: "site"
+
         fields:
-          - label: "Название компании"
-            name: "company"
-            widget: "string"
 
-          - label: "Слоган под логотипом"
-            name: "tagline"
-            widget: "string"
+          - {label: "Название фирмы", name: "company", widget: "string"}
 
-          - label: "Главный заголовок"
-            name: "hero_title"
-            widget: "string"
+          - {label: "Главный заголовок", name: "title", widget: "string"}
 
-          - label: "Выделенное слово в заголовке"
-            name: "hero_accent"
-            widget: "string"
+          - {label: "Описание", name: "subtitle", widget: "text"}
 
-          - label: "Описание под заголовком"
-            name: "hero_subtitle"
-            widget: "text"
+          - {label: "Фоновое фото", name: "hero", widget: "image"}
 
-          - label: "Фоновое фото главного экрана"
-            name: "hero_image"
-            widget: "image"
-            required: false
+          - {label: "Телефон", name: "phone", widget: "string"}
 
-          - label: "Телефон"
-            name: "phone"
-            widget: "string"
+          - {label: "WhatsApp", name: "whatsapp", widget: "string"}
 
-          - label: "WhatsApp"
-            name: "whatsapp"
-            widget: "string"
+          - {label: "Адрес", name: "address", widget: "string"}
 
-          - label: "Город"
-            name: "city"
-            widget: "string"
-
-          - label: "Адрес"
-            name: "address"
-            widget: "string"
-
-          - label: "Режим работы"
-            name: "work_time"
-            widget: "string"
-
-          - label: "Кнопка WhatsApp"
-            name: "whatsapp_button"
-            widget: "string"
-
-          - label: "Кнопка звонка"
-            name: "call_button"
-            widget: "string"
-
-          - label: "Преимущества"
-            name: "features"
-            widget: "list"
-            fields:
-              - label: "Заголовок"
-                name: "title"
-                widget: "string"
-              - label: "Описание"
-                name: "text"
-                widget: "string"
+          - {label: "Режим работы", name: "worktime", widget: "string"}
 
   - name: "products"
-    label: "2. Каталог брусчатки"
+    label: "2. Каталог"
+
     files:
       - file: "content/products.json"
         label: "Товары"
         name: "products"
+
         fields:
-          - label: "Список товаров"
+
+          - label: "Товары"
+
             name: "items"
+
             widget: "list"
-            summary: "{{fields.name}} — {{fields.price}}"
+
             fields:
-              - label: "Название товара"
-                name: "name"
-                widget: "string"
 
-              - label: "Цена"
-                name: "price"
-                widget: "string"
+              - {label: "Название", name: "name", widget: "string"}
 
-              - label: "Описание"
-                name: "description"
-                widget: "text"
+              - {label: "Цена", name: "price", widget: "string"}
 
-              - label: "Фото товара"
-                name: "image"
-                widget: "image"
+              - {label: "Описание", name: "description", widget: "text"}
 
-              - label: "Показывать на сайте"
-                name: "active"
-                widget: "boolean"
-                default: true
+              - {label: "Фото", name: "image", widget: "image"}
+
+              - {label: "Показывать", name: "active", widget: "boolean", default: true}
 
   - name: "works"
     label: "3. Наши работы"
+
     files:
       - file: "content/works.json"
-        label: "Фото выполненных работ"
+        label: "Работы"
         name: "works"
+
         fields:
-          - label: "Список работ"
+
+          - label: "Работы"
+
             name: "items"
+
             widget: "list"
-            summary: "{{fields.title}}"
+
             fields:
-              - label: "Название работы"
-                name: "title"
-                widget: "string"
 
-              - label: "Описание"
-                name: "description"
-                widget: "text"
+              - {label: "Название", name: "title", widget: "string"}
 
-              - label: "Фото"
-                name: "image"
-                widget: "image"
+              - {label: "Описание", name: "description", widget: "text"}
 
-              - label: "Показывать на сайте"
-                name: "active"
-                widget: "boolean"
-                default: true
+              - {label: "Фото", name: "image", widget: "image"}
 
   - name: "reviews"
     label: "4. Отзывы"
+
     files:
       - file: "content/reviews.json"
-        label: "Отзывы клиентов"
+        label: "Отзывы"
         name: "reviews"
+
         fields:
+
           - label: "Отзывы"
+
             name: "items"
+
             widget: "list"
-            summary: "{{fields.name}}"
+
             fields:
-              - label: "Имя клиента"
-                name: "name"
-                widget: "string"
 
-              - label: "Текст отзыва"
-                name: "text"
-                widget: "text"
+              - {label: "Имя", name: "name", widget: "string"}
 
-              - label: "Оценка"
-                name: "rating"
-                widget: "number"
-                value_type: "int"
-                min: 1
-                max: 5
+              - {label: "Текст", name: "text", widget: "text"}
 
-              - label: "Показывать на сайте"
-                name: "active"
-                widget: "boolean"
-                default: true
+              - {label: "Оценка", name: "rating", widget: "number"}
