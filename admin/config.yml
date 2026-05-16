@@ -6,27 +6,35 @@ media_folder: "uploads"
 public_folder: "/uploads"
 
 collections:
-  - name: "homepage"
-    label: "1. Главная страница"
+  - name: "site"
+    label: "1. Настройки сайта"
     files:
-      - file: "content/home.json"
-        label: "Текст и контакты"
-        name: "home"
+      - file: "content/site.json"
+        label: "Основная информация"
+        name: "site"
         fields:
-          - label: "Название фирмы"
+          - label: "Название компании"
             name: "company"
             widget: "string"
 
+          - label: "Слоган под логотипом"
+            name: "tagline"
+            widget: "string"
+
           - label: "Главный заголовок"
-            name: "title"
+            name: "hero_title"
+            widget: "string"
+
+          - label: "Выделенное слово в заголовке"
+            name: "hero_accent"
             widget: "string"
 
           - label: "Описание под заголовком"
-            name: "subtitle"
+            name: "hero_subtitle"
             widget: "text"
 
-          - label: "Фоновое фото"
-            name: "hero"
+          - label: "Фоновое фото главного экрана"
+            name: "hero_image"
             widget: "image"
             required: false
 
@@ -41,6 +49,33 @@ collections:
           - label: "Город"
             name: "city"
             widget: "string"
+
+          - label: "Адрес"
+            name: "address"
+            widget: "string"
+
+          - label: "Режим работы"
+            name: "work_time"
+            widget: "string"
+
+          - label: "Кнопка WhatsApp"
+            name: "whatsapp_button"
+            widget: "string"
+
+          - label: "Кнопка звонка"
+            name: "call_button"
+            widget: "string"
+
+          - label: "Преимущества"
+            name: "features"
+            widget: "list"
+            fields:
+              - label: "Заголовок"
+                name: "title"
+                widget: "string"
+              - label: "Описание"
+                name: "text"
+                widget: "string"
 
   - name: "products"
     label: "2. Каталог брусчатки"
@@ -70,6 +105,11 @@ collections:
                 name: "image"
                 widget: "image"
 
+              - label: "Показывать на сайте"
+                name: "active"
+                widget: "boolean"
+                default: true
+
   - name: "works"
     label: "3. Наши работы"
     files:
@@ -93,3 +133,40 @@ collections:
               - label: "Фото"
                 name: "image"
                 widget: "image"
+
+              - label: "Показывать на сайте"
+                name: "active"
+                widget: "boolean"
+                default: true
+
+  - name: "reviews"
+    label: "4. Отзывы"
+    files:
+      - file: "content/reviews.json"
+        label: "Отзывы клиентов"
+        name: "reviews"
+        fields:
+          - label: "Отзывы"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - label: "Имя клиента"
+                name: "name"
+                widget: "string"
+
+              - label: "Текст отзыва"
+                name: "text"
+                widget: "text"
+
+              - label: "Оценка"
+                name: "rating"
+                widget: "number"
+                value_type: "int"
+                min: 1
+                max: 5
+
+              - label: "Показывать на сайте"
+                name: "active"
+                widget: "boolean"
+                default: true
