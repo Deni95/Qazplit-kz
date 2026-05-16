@@ -2,27 +2,17 @@
   "items": [
     {
       "name": "Кирпичик серый",
-      "description": "Классическая брусчатка для двора и дорожек.",
       "price": "от 3 500 ₸/м²",
-      "image": "https://images.unsplash.com/photo-1598971836225-2c2f1a9d6f7a?q=80&w=900&auto=format&fit=crop"
+      "description": "Классическая брусчатка для двора и дорожек.",
+      "image": "/uploads/product-1.jpg",
+      "active": true
     },
     {
       "name": "Катушка цветная",
-      "description": "Прочная брусчатка для парковок и тротуаров.",
       "price": "от 4 200 ₸/м²",
-      "image": "https://images.unsplash.com/photo-1589923188900-85dae523342b?q=80&w=900&auto=format&fit=crop"
-    },
-    {
-      "name": "Волна",
-      "description": "Стильный дизайн для вашего участка.",
-      "price": "от 3 900 ₸/м²",
-      "image": "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?q=80&w=900&auto=format&fit=crop"
-    },
-    {
-      "name": "Старый город",
-      "description": "Элегантный вид и высокая прочность.",
-      "price": "от 4 500 ₸/м²",
-      "image": "https://images.unsplash.com/photo-1597047084897-51e81819a499?q=80&w=900&auto=format&fit=crop"
+      "description": "Прочная брусчатка для парковок и тротуаров.",
+      "image": "/uploads/product-2.jpg",
+      "active": true
     }
   ]
 }
