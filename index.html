@@ -1,118 +1,491 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ЭлитБрусчатка | Премиальная брусчатка в Павлодаре</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QAZPLITT — Брусчатка в Павлодаре</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #07090b;
+      color: #ffffff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .gold {
+      color: #d99a16;
+    }
+
+    .header {
+      height: 76px;
+      background: #080a0d;
+      display: flex;
+      align-items: center;
+      padding: 0 46px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-right: auto;
+    }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      border: 3px solid #d99a16;
+      transform: rotate(45deg);
+      position: relative;
+    }
+
+    .logo-icon::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border: 2px solid #d99a16;
+    }
+
+    .logo-title {
+      font-size: 30px;
+      font-weight: 800;
+      color: #d99a16;
+      letter-spacing: 1px;
+    }
+
+    .logo-subtitle {
+      font-size: 10px;
+      color: #b7b7b7;
+      margin-top: -3px;
+    }
+
+    .menu {
+      display: flex;
+      gap: 34px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .menu a {
+      opacity: 0.9;
+    }
+
+    .menu a:hover {
+      color: #d99a16;
+    }
+
+    .top-btn {
+      margin-left: 36px;
+      border: 1px solid #d99a16;
+      color: #d99a16;
+      padding: 13px 22px;
+      border-radius: 5px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .hero {
+      min-height: 520px;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.88), rgba(0,0,0,0.35)),
+        url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center;
+      padding: 90px 46px 40px;
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      line-height: 1.12;
+      text-transform: uppercase;
+      max-width: 630px;
+      margin-bottom: 24px;
+    }
+
+    .hero p {
+      font-size: 22px;
+      line-height: 1.45;
+      max-width: 520px;
+      margin-bottom: 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 26px;
+      border-radius: 5px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #e0a326, #c47b0d);
+      color: #fff;
+    }
+
+    .btn-outline {
+      border: 1px solid #d99a16;
+      color: #fff;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: #101316;
+      padding: 24px 46px;
+      gap: 22px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .feature {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .feature-icon {
+      color: #d99a16;
+      font-size: 30px;
+    }
+
+    .feature strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .feature span {
+      color: #c7c7c7;
+      font-size: 13px;
+    }
+
+    .section {
+      padding: 58px 46px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 34px;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 130px;
+      height: 2px;
+      background: #d99a16;
+      margin: 14px auto 0;
+    }
+
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: #111417;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      height: 155px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #cfcfcf;
+      font-size: 14px;
+      line-height: 1.45;
+      min-height: 42px;
+    }
+
+    .price {
+      margin-top: 14px;
+      color: #d99a16;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .more {
+      display: block;
+      margin-top: 16px;
+      text-align: center;
+      border: 1px solid #d99a16;
+      color: #d99a16;
+      padding: 11px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .works {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .works img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .footer {
+      background: #050607;
+      padding: 26px 46px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      color: #fff;
+    }
+
+    .footer-icon {
+      color: #d99a16;
+      font-size: 25px;
+    }
+
+    .footer small {
+      display: block;
+      color: #aaa;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .header {
+        padding: 18px;
+        height: auto;
+        flex-wrap: wrap;
+      }
+
+      .menu {
+        width: 100%;
+        margin-top: 18px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .top-btn {
+        margin-left: 0;
+        margin-top: 16px;
+      }
+
+      .hero {
+        padding: 70px 22px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .features,
+      .catalog,
+      .works,
+      .footer {
+        grid-template-columns: 1fr;
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .section {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <!-- HERO блок с заголовком -->
-    <div class="hero">
-        <div class="container">
-            <h1>Брусчатка, которая делает участок <span class="gold">дорогим</span> с первого взгляда</h1>
-            <p class="subtitle">Премиальная брусчатка для частных домов и бизнеса в Павлодаре</p>
-            <a href="#catalog" class="btn">Смотреть каталог</a>
-        </div>
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon"></div>
+    <div>
+      <div class="logo-title">QAZPLITT</div>
+      <div class="logo-subtitle">БРУСЧАТКА ПРЕМИУМ КАЧЕСТВА</div>
     </div>
+  </div>
 
-    <!-- Блок преимуществ -->
-    <div class="benefits">
-        <div class="container">
-            <div class="benefit-item">
-                <div class="benefit-number">150+</div>
-                <p>реализованных объектов</p>
-            </div>
-            <div class="benefit-item">
-                <div class="benefit-number">7 лет</div>
-                <p>опыта в укладке</p>
-            </div>
-            <div class="benefit-item">
-                <div class="benefit-number">24/7</div>
-                <p>консультация и расчёт</p>
-            </div>
-        </div>
+  <nav class="menu">
+    <a href="#">Главная</a>
+    <a href="#catalog">Каталог</a>
+    <a href="#works">Наши работы</a>
+    <a href="#prices">Цены</a>
+    <a href="#about">О компании</a>
+    <a href="#contacts">Контакты</a>
+  </nav>
+
+  <a class="top-btn" href="https://wa.me/77073908307">Связаться с нами</a>
+</header>
+
+<section class="hero">
+  <h1>
+    Премиальная <span class="gold">брусчатка</span><br>
+    в Павлодаре
+  </h1>
+
+  <p>Продажа, доставка и укладка брусчатки под ключ</p>
+
+  <div class="hero-buttons">
+    <a class="btn btn-gold" href="https://wa.me/77073908307">Написать в WhatsApp</a>
+    <a class="btn btn-outline" href="tel:+77073908307">Позвонить</a>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <div class="feature-icon">▣</div>
+    <div>
+      <strong>Собственное производство</strong>
+      <span>Гарантируем качество</span>
     </div>
+  </div>
 
-    <!-- Блок "О компании" -->
-    <div class="about">
-        <div class="container">
-            <h2>Создаём покрытие, которое выглядит солидно и служит долго</h2>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>Мы продаём и укладываем брусчатку для дворов, дорожек, парковок, террас и коммерческих территорий. Работаем в современном и классическом стилях, делаем визуально дорого и аккуратно.</p>
-                    <p>Даже если у вас пока нет точного проекта, мы поможем подобрать формат, цвет, толщину и схему укладки под ваш участок.</p>
-                    <ul class="about-list">
-                        <li>✔ Бесплатная первичная консультация</li>
-                        <li>✔ Подбор дизайна под фасад дома</li>
-                        <li>✔ Расчёт количества материала</li>
-                        <li>✔ Монтаж и благоустройство участка</li>
-                    </ul>
-                </div>
-                <div class="about-image">
-                    <img src="https://via.placeholder.com/500x400?text=Ваше+фото" alt="Пример работы">
-                </div>
-            </div>
-        </div>
+  <div class="feature">
+    <div class="feature-icon">▤</div>
+    <div>
+      <strong>Доставка по Павлодару</strong>
+      <span>Быстро и в срок</span>
     </div>
+  </div>
 
-    <!-- Блок каталога с карточками товаров -->
-    <div id="catalog" class="catalog">
-        <div class="container">
-            <h2>Наши решения</h2>
-            <div class="catalog-grid">
-                <div class="catalog-card">
-                    <h3>Классическая брусчатка</h3>
-                    <p>Идеально подходит для дворов, дорожек и площадок возле дома.</p>
-                    <div class="price">от 8 500 ₸/м²</div>
-                    <a href="#contact" class="btn-small">Заказать</a>
-                </div>
-                <div class="catalog-card">
-                    <h3>Премиум плитка для парковки</h3>
-                    <p>Усиленное решение для въездной группы и зоны автомобиля.</p>
-                    <div class="price">от 10 500 ₸/м²</div>
-                    <a href="#contact" class="btn-small">Заказать</a>
-                </div>
-                <div class="catalog-card">
-                    <h3>Дизайнерская коллекция</h3>
-                    <p>Для тех, кто хочет эффектный рисунок и благородный внешний вид.</p>
-                    <div class="price">от 12 000 ₸/м²</div>
-                    <a href="#contact" class="btn-small">Заказать</a>
-                </div>
-            </div>
-        </div>
+  <div class="feature">
+    <div class="feature-icon">◇</div>
+    <div>
+      <strong>Укладка под ключ</strong>
+      <span>Опытные бригады</span>
     </div>
+  </div>
 
-    <!-- Блок с этапами работ -->
-    <div class="steps">
-        <div class="container">
-            <h2>Понятный путь от заявки до готового участка</h2>
-            <div class="steps-grid">
-                <div class="step-item">01<br><span>Заявка</span><br><small>Вы оставляете заявку, мы связываемся и уточняем задачу.</small></div>
-                <div class="step-item">02<br><span>Подбор</span><br><small>Подбираем коллекцию, цвет, толщину и рассчитываем объём.</small></div>
-                <div class="step-item">03<br><span>Согласование</span><br><small>Утверждаем стоимость, сроки и формат выполнения работ.</small></div>
-                <div class="step-item">04<br><span>Монтаж</span><br><small>Выполняем укладку аккуратно, быстро и с контролем качества.</small></div>
-            </div>
-        </div>
+  <div class="feature">
+    <div class="feature-icon">◎</div>
+    <div>
+      <strong>Гарантия качества</strong>
+      <span>На всю продукцию</span>
     </div>
+  </div>
+</section>
 
-    <!-- Контактный блок -->
-    <div id="contact" class="contact">
-        <div class="container">
-            <h2>Оставьте заявку и получите расчёт стоимости</h2>
-            <p>Заполните форму, и мы свяжемся с вами для консультации.</p>
-            <form class="contact-form" action="#" method="post">
-                <input type="text" name="name" placeholder="Ваше имя" required>
-                <input type="tel" name="phone" placeholder="Ваш телефон" required>
-                <button type="submit" class="btn">Отправить заявку</button>
-            </form>
-            <div class="contact-note">
-                <p>+7 (700) 000-00-00 | WhatsApp | Telegram</p>
-            </div>
-        </div>
+<section id="catalog" class="section">
+  <h2 class="section-title">Каталог брусчатки</h2>
+  <div class="catalog" id="products"></div>
+</section>
+
+<section id="works" class="section">
+  <h2 class="section-title">Наши работы</h2>
+
+  <div class="works">
+    <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=900&auto=format&fit=crop" alt="">
+    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=900&auto=format&fit=crop" alt="">
+    <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=900&auto=format&fit=crop" alt="">
+    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=900&auto=format&fit=crop" alt="">
+  </div>
+</section>
+
+<footer id="contacts" class="footer">
+  <div class="footer-item">
+    <div class="footer-icon">⌖</div>
+    <div>
+      <small>Адрес</small>
+      Павлодар
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <div class="footer-item">
+    <div class="footer-icon">☎</div>
+    <div>
+      <small>Телефон</small>
+      +7 707 390 83 07
+    </div>
+  </div>
+
+  <div class="footer-item">
+    <div class="footer-icon">☏</div>
+    <div>
+      <small>WhatsApp</small>
+      Написать нам
+    </div>
+  </div>
+
+  <div class="footer-item">
+    <div class="footer-icon">◷</div>
+    <div>
+      <small>Режим работы</small>
+      Пн - Вс: 8:00 - 20:00
+    </div>
+  </div>
+</footer>
+
+<script>
+  fetch("content/products.json")
+    .then(response => response.json())
+    .then(data => {
+      const products = data.items || [];
+      const container = document.getElementById("products");
+
+      container.innerHTML = products.map(product => `
+        <div class="card">
+          <img src="${product.image}" alt="${product.name}">
+          <div class="card-body">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <div class="price">${product.price}</div>
+            <a class="more" href="https://wa.me/77073908307?text=Здравствуйте,%20интересует%20${encodeURIComponent(product.name)}">Подробнее</a>
+          </div>
+        </div>
+      `).join("");
+    });
+</script>
+
 </body>
 </html>
