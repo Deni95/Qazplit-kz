@@ -1,17 +1,14 @@
 {
-  "company": "QAZPLITT",
-  "tagline": "Брусчатка премиум качества",
-  "hero_title": "Премиальная брусчатка",
-  "hero_accent": "в Павлодаре",
-  "hero_subtitle": "Продажа, доставка и укладка брусчатки под ключ",
-  "hero_image": "",
-  "phone": "+7 707 390 83 07",
-  "whatsapp": "+7 707 390 83 07",
   "city": "Павлодар",
-  "address": "Павлодар",
-  "work_time": "Пн - Вс: 8:00 - 20:00",
-  "whatsapp_button": "Написать в WhatsApp",
+  "phone": "+7 707 390 83 07",
+  "tagline": "Брусчатка премиум качества",
+  "hero_accent": "в Павлодаре",
+  "whatsapp": "+7 707 390 83 07",
   "call_button": "Позвонить",
+  "hero_title": "Премиальная брусчатка",
+  "address": "Павлодар",
+  "hero_image": "/uploads/chatgpt-image-16-мая-2026-г.-18_11_32.png",
+  "work_time": "Пн - Вс: 8:00 - 20:00",
   "features": [
     {
       "title": "Собственное производство",
@@ -29,5 +26,8 @@
       "title": "Гарантия качества",
       "text": "На всю продукцию"
     }
-  ]
+  ],
+  "company": "QAZPLITT",
+  "hero_subtitle": "Продажа, доставка и укладка брусчатки под ключ",
+  "whatsapp_button": "Написать в WhatsApp"
 }
