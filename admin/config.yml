@@ -1,9 +1,10 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: Deni95/Qazplit-kz
   branch: main
 
-site_url: https://qazplittpvl.netlify.app
-display_url: https://qazplittpvl.netlify.app
+site_url: https://qazplit-kz.pages.dev
+display_url: https://qazplit-kz.pages.dev
 
 media_folder: "uploads"
 public_folder: "/uploads"
