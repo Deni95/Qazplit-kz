@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>QAZPLITT Admin</title>
+<style>
+body{font-family:Arial;background:#111;color:white;display:flex;justify-content:center;align-items:center;height:100vh}
+.box{background:#222;padding:30px;border-radius:10px}
+input{display:block;margin:10px 0;padding:10px;width:250px}
+button{padding:10px;width:100%}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Вход администратора</h2>
+
+<input id="login" placeholder="Логин">
+<input id="pass" type="password" placeholder="Пароль">
+
+<button onclick="enter()">Войти</button>
+</div>
+
+<script>
+function enter(){
+
+let login=document.getElementById("login").value;
+let pass=document.getElementById("pass").value;
+
+if(login==="admin" && pass==="Qaz2026!"){
+
+location.href="/admin-panel.html";
+
+}else{
+
+alert("Неверный пароль");
+
+}
+
+}
+</script>
+
+</body>
+</html>
