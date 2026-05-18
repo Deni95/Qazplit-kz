@@ -368,7 +368,7 @@
   <a class="top-btn" href="https://wa.me/77073908307">Связаться с нами</a>
 </header>
 
-<section class="hero">
+<section class="hero" id="hero">
   <h1>
     Премиальная <span class="gold">брусчатка</span><br>
     в Павлодаре
@@ -467,6 +467,15 @@
 </footer>
 
 <script>
+  fetch("content/site.json")
+    .then(response => response.json())
+    .then(site => {
+      if (site.hero_image) {
+        const hero = document.getElementById("hero");
+        hero.style.backgroundImage = `linear-gradient(90deg, rgba(0,0,0,0.88), rgba(0,0,0,0.35)), url("${site.hero_image}")`;
+      }
+    });
+
   fetch("content/products.json")
     .then(response => response.json())
     .then(data => {
