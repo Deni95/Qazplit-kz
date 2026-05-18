@@ -46,19 +46,13 @@
       margin-right: auto;
     }
 
-    .logo-icon {
-      width: 34px;
-      height: 34px;
-      border: 3px solid #d99a16;
-      transform: rotate(45deg);
-      position: relative;
-    }
-
-    .logo-icon::after {
-      content: "";
-      position: absolute;
-      inset: 6px;
-      border: 2px solid #d99a16;
+    .logo-image {
+      width: 68px;
+      height: 68px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid rgba(217, 154, 22, 0.5);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
     }
 
     .logo-title {
@@ -349,9 +343,9 @@
 
 <header class="header">
   <div class="logo">
-    <div class="logo-icon"></div>
+    <img id="site-logo" class="logo-image" src="/uploads/chatgpt-image-16-мая-2026-г.-18_11_32.png" alt="Логотип QAZPLITT" />
     <div>
-      <div class="logo-title">QAZPLITT</div>
+      <div id="site-company" class="logo-title">QAZPLITT</div>
       <div class="logo-subtitle">БРУСЧАТКА ПРЕМИУМ КАЧЕСТВА</div>
     </div>
   </div>
@@ -467,6 +461,23 @@
 </footer>
 
 <script>
+  fetch("content/home.json")
+    .then(response => response.json())
+    .then(home => {
+      const logo = document.getElementById("site-logo");
+      const company = document.getElementById("site-company");
+
+      if (home.logo) {
+        logo.src = home.logo;
+      }
+
+      if (home.company) {
+        company.textContent = home.company;
+        logo.alt = `Логотип ${home.company}`;
+      }
+    })
+    .catch(() => {});
+
   fetch("content/products.json")
     .then(response => response.json())
     .then(data => {
