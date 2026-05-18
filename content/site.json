@@ -1,33 +1,26 @@
 {
   "city": "Павлодар",
-  "phone": "+7 707 390 83 07",
+  "phone": "8 777 123 3002",
   "tagline": "Брусчатка премиум качества",
   "hero_accent": "в Павлодаре",
-  "whatsapp": "+7 707 390 83 07",
+  "whatsapp": "8 777 123 3002",
   "call_button": "Позвонить",
   "hero_title": "Премиальная брусчатка",
   "address": "Павлодар",
- "hero_image": "/uploads/project.jpg",
+ "hero_image": "/uploads/project21.jpg.jpg",
   "work_time": "Пн - Вс: 8:00 - 20:00",
   "features": [
     {
       "title": "Собственное производство",
       "text": "Гарантируем качество"
     },
-    {
-      "title": "Доставка по Павлодару",
-      "text": "Быстро и в срок"
-    },
-    {
-      "title": "Укладка под ключ",
-      "text": "Опытные бригады"
-    },
+    
     {
       "title": "Гарантия качества",
       "text": "На всю продукцию"
     }
   ],
   "company": "QAZPLITT",
-  "hero_subtitle": "Продажа, доставка и укладка брусчатки под ключ",
+  "hero_subtitle": "Продажа",
   "whatsapp_button": "Написать в WhatsApp"
 }
