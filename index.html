@@ -8,82 +8,493 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#07090b;color:#fff}
-a{color:inherit;text-decoration:none}
-.gold{color:#d99a16}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-.header{height:76px;background:#080a0d;display:flex;align-items:center;padding:0 46px;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:10}
-.logo{display:flex;align-items:center;gap:12px;margin-right:auto}
-.logo-icon{width:34px;height:34px;border:3px solid #d99a16;transform:rotate(45deg);position:relative}
-.logo-icon:after{content:"";position:absolute;inset:6px;border:2px solid #d99a16}
-.logo-title{font-size:30px;font-weight:800;color:#d99a16}
-.logo-subtitle{font-size:10px;color:#b7b7b7}
-.menu{display:flex;gap:34px;font-size:14px;font-weight:700;text-transform:uppercase}
-.menu a:hover{color:#d99a16}
-.top-btn{margin-left:36px;border:1px solid #d99a16;color:#d99a16;padding:13px 22px;border-radius:5px;font-weight:700}
+body{
+font-family:Arial,sans-serif;
+background:#07090b;
+color:#fff;
+}
 
-.hero{min-height:520px;background:linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.35)),url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop");background-size:cover;background-position:center;padding:90px 46px 40px}
-.hero h1{font-size:52px;line-height:1.12;text-transform:uppercase;max-width:630px;margin-bottom:24px}
-.hero p{font-size:22px;line-height:1.45;max-width:520px;margin-bottom:28px}
-.hero-buttons{display:flex;gap:18px}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:16px 26px;border-radius:5px;font-weight:700;font-size:16px}
-.btn-gold{background:linear-gradient(135deg,#e0a326,#c47b0d)}
-.btn-outline{border:1px solid #d99a16}
+a{
+color:inherit;
+text-decoration:none;
+}
 
-.features{display:grid;grid-template-columns:repeat(4,1fr);background:#101316;padding:24px 46px;gap:22px}
-.feature{display:flex;gap:14px;align-items:center}
-.feature-icon{color:#d99a16;font-size:30px}
-.feature strong{display:block;font-size:15px;margin-bottom:4px}
-.feature span{color:#c7c7c7;font-size:13px}
+.gold{
+color:#d99a16;
+}
 
-.section{padding:58px 46px;max-width:1280px;margin:0 auto}
-.section-title{text-align:center;font-size:34px;text-transform:uppercase;margin-bottom:36px}
-.section-title:after{content:"";display:block;width:130px;height:2px;background:#d99a16;margin:14px auto 0}
+/* Шапка */
+.header{
+height:76px;
+background:#080a0d;
+display:flex;
+align-items:center;
+padding:0 46px;
+border-bottom:1px solid rgba(255,255,255,.08);
+position:sticky;
+top:0;
+z-index:10;
+}
 
-.catalog{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.card{background:#111417;border:1px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden}
-.card img{width:100%;height:155px;object-fit:cover;display:block}
-.card-body{padding:18px}
-.card h3{font-size:18px;margin-bottom:10px}
-.card p{color:#cfcfcf;font-size:14px;line-height:1.45;min-height:42px}
-.price{margin-top:14px;color:#d99a16;font-weight:800;font-size:18px}
-.more{display:block;width:100%;margin-top:16px;text-align:center;border:1px solid #d99a16;color:#d99a16;background:transparent;padding:11px;border-radius:4px;font-weight:700;font-size:14px;cursor:pointer}
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+margin-right:auto;
+}
 
-.works{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.works img{width:100%;height:150px;object-fit:cover;border-radius:8px}
+.logo-icon{
+width:34px;
+height:34px;
+border:3px solid #d99a16;
+transform:rotate(45deg);
+position:relative;
+}
 
-.footer{background:#050607;padding:26px 46px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;border-top:1px solid rgba(255,255,255,.08)}
-.footer-item{display:flex;gap:12px;align-items:center}
-.footer-icon{color:#d99a16;font-size:25px}
-.footer small{display:block;color:#aaa;margin-bottom:4px}
+.logo-icon:after{
+content:"";
+position:absolute;
+inset:6px;
+border:2px solid #d99a16;
+}
 
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;justify-content:center;align-items:center;padding:20px}
-.modal-box{background:#111417;width:95%;max-width:1100px;max-height:90vh;border-radius:16px;position:relative;border:1px solid rgba(255,255,255,.12);overflow:hidden}
-.modal-grid{display:grid;grid-template-columns:55% 45%;max-height:90vh}
-.modal-photo-wrap{background:#000;position:relative;display:flex;align-items:center;justify-content:center;padding:15px}
-.modal-img{width:100%;height:70vh;object-fit:contain;border-radius:10px}
-.modal-info{padding:28px;overflow-y:auto;max-height:90vh}
-.modal-info h2{font-size:30px;margin-bottom:12px}
-.modal-close{position:absolute;top:10px;right:15px;z-index:10;font-size:38px;background:rgba(0,0,0,.45);border:none;color:white;cursor:pointer;width:46px;height:46px;border-radius:50%;line-height:40px}
-.modal-price{font-size:30px;color:#d99a16;font-weight:800;margin:18px 0}
-.modal-desc{color:#e5e5e5;font-size:17px;line-height:1.65;white-space:pre-line}
-.modal-btn{display:block;background:linear-gradient(135deg,#e0a326,#c47b0d);padding:15px;text-align:center;border-radius:8px;font-weight:800;margin-top:24px}
-.zoom-btn{position:absolute;bottom:25px;right:25px;background:#d99a16;color:#000;border:none;padding:12px 18px;border-radius:8px;font-weight:800;cursor:pointer}
-.zoom-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:10000;align-items:center;justify-content:center;padding:20px}
-.zoom-modal img{max-width:95%;max-height:95%;object-fit:contain}
+.logo-title{
+font-size:30px;
+font-weight:800;
+color:#d99a16;
+}
 
+.logo-subtitle{
+font-size:10px;
+color:#b7b7b7;
+}
+
+.menu{
+display:flex;
+gap:34px;
+font-size:14px;
+font-weight:700;
+text-transform:uppercase;
+}
+
+.menu a:hover{
+color:#d99a16;
+}
+
+.top-btn{
+margin-left:36px;
+border:1px solid #d99a16;
+color:#d99a16;
+padding:13px 22px;
+border-radius:5px;
+font-weight:700;
+}
+
+/* Первый экран */
+.hero{
+min-height:520px;
+background:
+linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.35)),
+url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop");
+background-size:cover;
+background-position:center;
+padding:90px 46px 40px;
+}
+
+.hero h1{
+font-size:52px;
+line-height:1.12;
+text-transform:uppercase;
+max-width:630px;
+margin-bottom:24px;
+}
+
+.hero p{
+font-size:22px;
+line-height:1.45;
+max-width:520px;
+margin-bottom:28px;
+}
+
+.hero-buttons{
+display:flex;
+gap:18px;
+}
+
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:16px 26px;
+border-radius:5px;
+font-weight:700;
+font-size:16px;
+}
+
+.btn-gold{
+background:linear-gradient(135deg,#e0a326,#c47b0d);
+}
+
+.btn-outline{
+border:1px solid #d99a16;
+}
+
+/* Преимущества */
+.features{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+background:#101316;
+padding:24px 46px;
+gap:22px;
+}
+
+.feature{
+display:flex;
+gap:14px;
+align-items:center;
+}
+
+.feature-icon{
+color:#d99a16;
+font-size:30px;
+}
+
+.feature strong{
+display:block;
+font-size:15px;
+margin-bottom:4px;
+}
+
+.feature span{
+color:#c7c7c7;
+font-size:13px;
+}
+
+/* Секции */
+.section{
+padding:58px 46px;
+max-width:1280px;
+margin:0 auto;
+}
+
+.section-title{
+text-align:center;
+font-size:34px;
+text-transform:uppercase;
+margin-bottom:36px;
+}
+
+.section-title:after{
+content:"";
+display:block;
+width:130px;
+height:2px;
+background:#d99a16;
+margin:14px auto 0;
+}
+
+/* Каталог */
+.catalog{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:24px;
+align-items:stretch;
+}
+
+.card{
+background:#111417;
+border:1px solid rgba(255,255,255,.08);
+border-radius:8px;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+height:100%;
+min-height:430px;
+}
+
+.card img{
+width:100%;
+height:155px;
+object-fit:cover;
+display:block;
+}
+
+.card-body{
+padding:18px;
+display:flex;
+flex-direction:column;
+flex:1;
+}
+
+.card h3{
+font-size:18px;
+margin-bottom:10px;
+min-height:45px;
+}
+
+.card p{
+color:#cfcfcf;
+font-size:14px;
+line-height:1.5;
+min-height:95px;
+overflow:hidden;
+}
+
+.price{
+margin-top:auto;
+color:#d99a16;
+font-weight:800;
+font-size:18px;
+padding-top:15px;
+}
+
+.more{
+display:block;
+width:100%;
+margin-top:18px;
+text-align:center;
+border:1px solid #d99a16;
+color:#d99a16;
+background:transparent;
+padding:12px;
+border-radius:4px;
+font-weight:700;
+font-size:14px;
+cursor:pointer;
+}
+
+.more:hover{
+background:#d99a16;
+color:#000;
+}
+
+/* Работы */
+.works{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:24px;
+}
+
+.works img{
+width:100%;
+height:150px;
+object-fit:cover;
+border-radius:8px;
+}
+
+/* Подвал */
+.footer{
+background:#050607;
+padding:26px 46px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+border-top:1px solid rgba(255,255,255,.08);
+}
+
+.footer-item{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.footer-icon{
+color:#d99a16;
+font-size:25px;
+}
+
+.footer small{
+display:block;
+color:#aaa;
+margin-bottom:4px;
+}
+
+/* Окно подробнее */
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.88);
+z-index:9999;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.modal-box{
+background:#111417;
+width:95%;
+max-width:1100px;
+max-height:90vh;
+border-radius:16px;
+position:relative;
+border:1px solid rgba(255,255,255,.12);
+overflow:hidden;
+}
+
+.modal-grid{
+display:grid;
+grid-template-columns:55% 45%;
+max-height:90vh;
+}
+
+.modal-photo-wrap{
+background:#000;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:15px;
+}
+
+.modal-img{
+width:100%;
+height:70vh;
+object-fit:contain;
+border-radius:10px;
+}
+
+.modal-info{
+padding:28px;
+overflow-y:auto;
+max-height:90vh;
+}
+
+.modal-info h2{
+font-size:30px;
+margin-bottom:12px;
+}
+
+.modal-close{
+position:absolute;
+top:10px;
+right:15px;
+z-index:10;
+font-size:38px;
+background:rgba(0,0,0,.45);
+border:none;
+color:white;
+cursor:pointer;
+width:46px;
+height:46px;
+border-radius:50%;
+line-height:40px;
+}
+
+.modal-price{
+font-size:30px;
+color:#d99a16;
+font-weight:800;
+margin:18px 0;
+}
+
+.modal-desc{
+color:#e5e5e5;
+font-size:17px;
+line-height:1.65;
+white-space:pre-line;
+}
+
+.modal-btn{
+display:block;
+background:linear-gradient(135deg,#e0a326,#c47b0d);
+padding:15px;
+text-align:center;
+border-radius:8px;
+font-weight:800;
+margin-top:24px;
+}
+
+.zoom-btn{
+position:absolute;
+bottom:25px;
+right:25px;
+background:#d99a16;
+color:#000;
+border:none;
+padding:12px 18px;
+border-radius:8px;
+font-weight:800;
+cursor:pointer;
+}
+
+.zoom-modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.96);
+z-index:10000;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.zoom-modal img{
+max-width:95%;
+max-height:95%;
+object-fit:contain;
+}
+
+/* Телефон */
 @media(max-width:900px){
-.header{padding:18px;height:auto;flex-wrap:wrap}
-.menu{width:100%;margin-top:18px;gap:16px;flex-wrap:wrap}
-.top-btn{margin-left:0;margin-top:16px}
-.hero{padding:70px 22px}
-.hero h1{font-size:36px}
-.features,.catalog,.works,.footer{grid-template-columns:1fr;padding-left:22px;padding-right:22px}
-.section{padding-left:22px;padding-right:22px}
-.modal-grid{grid-template-columns:1fr}
-.modal-img{height:42vh}
-.modal-info{max-height:45vh;padding:20px}
+.header{
+padding:18px;
+height:auto;
+flex-wrap:wrap;
+}
+
+.menu{
+width:100%;
+margin-top:18px;
+gap:16px;
+flex-wrap:wrap;
+}
+
+.top-btn{
+margin-left:0;
+margin-top:16px;
+}
+
+.hero{
+padding:70px 22px;
+}
+
+.hero h1{
+font-size:36px;
+}
+
+.features,
+.catalog,
+.works,
+.footer{
+grid-template-columns:1fr;
+padding-left:22px;
+padding-right:22px;
+}
+
+.section{
+padding-left:22px;
+padding-right:22px;
+}
+
+.modal-grid{
+grid-template-columns:1fr;
+}
+
+.modal-img{
+height:42vh;
+}
+
+.modal-info{
+max-height:45vh;
+padding:20px;
+}
 }
 </style>
 </head>
@@ -113,6 +524,7 @@ a{color:inherit;text-decoration:none}
 <section class="hero">
 <h1>Премиальная <span class="gold">брусчатка</span><br>в Павлодаре</h1>
 <p>Продажа, доставка и укладка брусчатки под ключ</p>
+
 <div class="hero-buttons">
 <a class="btn btn-gold" href="https://wa.me/77073908307">Написать в WhatsApp</a>
 <a class="btn btn-outline" href="tel:+77073908307">Позвонить</a>
@@ -120,10 +532,37 @@ a{color:inherit;text-decoration:none}
 </section>
 
 <section class="features">
-<div class="feature"><div class="feature-icon">▣</div><div><strong>Качество</strong><span>Прочная брусчатка</span></div></div>
-<div class="feature"><div class="feature-icon">▤</div><div><strong>Доставка</strong><span>По Павлодару и области</span></div></div>
-<div class="feature"><div class="feature-icon">◇</div><div><strong>Укладка</strong><span>Работа под ключ</span></div></div>
-<div class="feature"><div class="feature-icon">◎</div><div><strong>Консультация</strong><span>Поможем подобрать вариант</span></div></div>
+<div class="feature">
+<div class="feature-icon">▣</div>
+<div>
+<strong>Качество</strong>
+<span>Прочная брусчатка</span>
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-icon">▤</div>
+<div>
+<strong>Доставка</strong>
+<span>По Павлодару и области</span>
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-icon">◇</div>
+<div>
+<strong>Укладка</strong>
+<span>Работа под ключ</span>
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-icon">◎</div>
+<div>
+<strong>Консультация</strong>
+<span>Поможем подобрать вариант</span>
+</div>
+</div>
 </section>
 
 <section id="catalog" class="section">
@@ -142,12 +581,40 @@ a{color:inherit;text-decoration:none}
 </section>
 
 <footer id="contacts" class="footer">
-<div class="footer-item"><div class="footer-icon">⌖</div><div><small>Адрес</small><span>Павлодар</span></div></div>
-<div class="footer-item"><div class="footer-icon">☎</div><div><small>Телефон</small><span>+7 707 390 83 07</span></div></div>
-<div class="footer-item"><div class="footer-icon">☏</div><div><small>WhatsApp</small><a href="https://wa.me/77073908307">Написать нам</a></div></div>
-<div class="footer-item"><div class="footer-icon">◷</div><div><small>Режим работы</small><span>Пн - Вс: 8:00 - 20:00</span></div></div>
+<div class="footer-item">
+<div class="footer-icon">⌖</div>
+<div>
+<small>Адрес</small>
+<span>Павлодар</span>
+</div>
+</div>
+
+<div class="footer-item">
+<div class="footer-icon">☎</div>
+<div>
+<small>Телефон</small>
+<span>+7 707 390 83 07</span>
+</div>
+</div>
+
+<div class="footer-item">
+<div class="footer-icon">☏</div>
+<div>
+<small>WhatsApp</small>
+<a href="https://wa.me/77073908307">Написать нам</a>
+</div>
+</div>
+
+<div class="footer-item">
+<div class="footer-icon">◷</div>
+<div>
+<small>Режим работы</small>
+<span>Пн - Вс: 8:00 - 20:00</span>
+</div>
+</div>
 </footer>
 
+<!-- Модальное окно товара -->
 <div id="productModal" class="modal" onclick="closeProductOutside(event)">
 <div class="modal-box">
 <button class="modal-close" onclick="closeProduct()">×</button>
@@ -165,10 +632,10 @@ a{color:inherit;text-decoration:none}
 <a id="modalWhatsapp" class="modal-btn" href="#" target="_blank">Написать в WhatsApp</a>
 </div>
 </div>
-
 </div>
 </div>
 
+<!-- Увеличение фото -->
 <div id="zoomModal" class="zoom-modal" onclick="closeZoom()">
 <img id="zoomImage" src="">
 </div>
