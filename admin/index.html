@@ -2,422 +2,275 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>QAZPLITT Админка</title>
-
+<title>QAZ-PLIT — Админка</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-background:#111;
-color:white;
-font-family:Arial;
-margin:0;
-padding:30px;
-}
-
-.box{
-max-width:900px;
-margin:auto;
-background:#1d1d1d;
-padding:25px;
-border-radius:15px;
-}
-
-input,
-textarea,
-button{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:none;
-border-radius:6px;
-}
-
-input,
-textarea{
-background:#eee;
-color:#000;
-}
-
-textarea{
-min-height:110px;
-resize:vertical;
-}
-
-button{
-background:#d89b18;
-border:none;
-font-weight:bold;
-cursor:pointer;
-}
-
-button:hover{
-opacity:.9;
-}
-
-.btn-red{
-background:#8b1e1e;
-color:white;
-}
-
-.btn-gray{
-background:#444;
-color:white;
-}
-
-.card{
-background:#2b2b2b;
-padding:15px;
-margin-top:15px;
-border-radius:10px;
-}
-
-.card img{
-width:180px;
-height:120px;
-object-fit:cover;
-border-radius:10px;
-margin:10px 0;
-}
-
-.card h3{
-margin:5px 0;
-}
-
-.card p{
-color:#ddd;
-white-space:pre-line;
-}
-
-.edit-box{
-margin-top:15px;
-padding-top:15px;
-border-top:1px solid #555;
-display:none;
-}
-
-.small{
-font-size:13px;
-color:#aaa;
-}
+body{margin:0;background:#111;color:#fff;font-family:Arial;padding:30px}
+.box{max-width:900px;margin:auto;background:#1d1d1d;padding:25px;border-radius:14px}
+input,textarea,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box}
+button{background:#d99a16;border:0;font-weight:bold;cursor:pointer;border-radius:6px}
+.card{background:#2a2a2a;padding:15px;margin-top:15px;border-radius:10px}
+img{max-width:180px;border-radius:8px;margin:10px 0;display:block}
+hr{border:0;border-top:1px solid #444;margin:25px 0}
 </style>
 </head>
 
 <body>
 
-<div class="box" id="login">
-<h1>Вход администратора</h1>
-
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Пароль">
-
-<button onclick="login()">Войти</button>
+<div class="box" id="loginBox">
+  <h1>Вход администратора</h1>
+  <input id="email" type="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Пароль">
+  <button onclick="login()">Войти</button>
 </div>
 
-<div class="box" id="admin" style="display:none">
+<div class="box" id="adminBox" style="display:none;">
+  <h1>QAZ-PLIT — админка</h1>
 
-<h1>QAZPLITT Админка</h1>
+  <h2>Главная страница</h2>
+  <input id="companyName" placeholder="Название фирмы">
+  <input id="heroImage" type="file" accept="image/*">
+  <button onclick="uploadHero()">Обновить главное фото</button>
 
-<h2>Добавить товар</h2>
+  <input id="logoImage" type="file" accept="image/*">
+  <button onclick="uploadLogo()">Обновить логотип</button>
 
-<input id="name" placeholder="Название">
-<input id="price" placeholder="Цена">
-<textarea id="description" placeholder="Полное описание товара"></textarea>
-<input type="file" id="image" accept="image/*">
+  <hr>
 
-<button onclick="addProduct()">Добавить товар</button>
-<button class="btn-gray" onclick="logout()">Выйти</button>
+  <h2>Добавить товар</h2>
+  <input id="name" placeholder="Название товара">
+  <input id="price" placeholder="Цена">
+  <textarea id="description" placeholder="Описание"></textarea>
+  <input id="image" type="file" accept="image/*">
+  <button onclick="addProduct()">Добавить товар</button>
 
-<h2>Список товаров</h2>
-<div id="products">Загрузка...</div>
+  <button onclick="logout()">Выйти</button>
 
+  <h2>Список товаров</h2>
+  <div id="products"></div>
 </div>
 
 <script>
 const SUPABASE_URL = "https://qsoukelbdkojofqyorfu.supabase.co";
-
 const SUPABASE_KEY = "sb_publishable_dek8j5Pe9ds1mX1S_X5ylw_OiJGRU47";
 
-const sb = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY,
-{
-auth:{
-persistSession:true,
-autoRefreshToken:true
-}
-}
-);
-
-async function login(){
-
-const email = document.getElementById("email").value.trim();
-const password = document.getElementById("password").value.trim();
-
-const {error} = await sb.auth.signInWithPassword({
-email,
-password
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true
+  }
 });
 
-if(error){
-alert("Ошибка входа: " + error.message);
-return;
-}
+async function login(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-showAdmin();
+  const { error } = await sb.auth.signInWithPassword({ email, password });
 
+  if(error){
+    alert("Ошибка входа: " + error.message);
+    return;
+  }
+
+  showAdmin();
 }
 
 async function logout(){
-await sb.auth.signOut();
-location.reload();
+  await sb.auth.signOut();
+  location.reload();
 }
 
 function showAdmin(){
-document.getElementById("login").style.display = "none";
-document.getElementById("admin").style.display = "block";
-loadProducts();
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("adminBox").style.display = "block";
+  loadSettings();
+  loadProducts();
 }
 
-async function uploadImage(file){
+async function uploadHero(){
+  const file = document.getElementById("heroImage").files[0];
+  const companyName = document.getElementById("companyName").value || "QAZPLITT";
 
-if(!file){
-return null;
+  if(!file){
+    alert("Выбери фото главного экрана");
+    return;
+  }
+
+  const fileName = "hero-" + Date.now() + "-" + file.name;
+
+  const { error } = await sb.storage
+    .from("site-images")
+    .upload(fileName, file);
+
+  if(error){
+    alert("Ошибка загрузки главного фото: " + error.message);
+    return;
+  }
+
+  const { data } = sb.storage
+    .from("site-images")
+    .getPublicUrl(fileName);
+
+  const { error: dbError } = await sb
+    .from("site_settings")
+    .upsert({
+      id: 1,
+      company_name: companyName,
+      hero_image_url: data.publicUrl
+    });
+
+  if(dbError){
+    alert("Ошибка сохранения: " + dbError.message);
+    return;
+  }
+
+  alert("Главное фото обновлено");
 }
 
-const filename = Date.now() + "-" + file.name.replaceAll(" ","-");
+async function uploadLogo(){
+  const file = document.getElementById("logoImage").files[0];
+  const companyName = document.getElementById("companyName").value || "QAZPLITT";
 
-const upload = await sb.storage
-.from("product-images")
-.upload(filename,file);
+  if(!file){
+    alert("Выбери логотип");
+    return;
+  }
 
-if(upload.error){
-alert("Ошибка загрузки фото: " + upload.error.message);
-return null;
+  const fileName = "logo-" + Date.now() + "-" + file.name;
+
+  const { error } = await sb.storage
+    .from("site-images")
+    .upload(fileName, file);
+
+  if(error){
+    alert("Ошибка загрузки логотипа: " + error.message);
+    return;
+  }
+
+  const { data } = sb.storage
+    .from("site-images")
+    .getPublicUrl(fileName);
+
+  const { error: dbError } = await sb
+    .from("site_settings")
+    .upsert({
+      id: 1,
+      company_name: companyName,
+      logo_url: data.publicUrl
+    });
+
+  if(dbError){
+    alert("Ошибка сохранения: " + dbError.message);
+    return;
+  }
+
+  alert("Логотип обновлён");
 }
 
-const image = sb.storage
-.from("product-images")
-.getPublicUrl(filename);
+async function loadSettings(){
+  const { data } = await sb
+    .from("site_settings")
+    .select("*")
+    .eq("id", 1)
+    .single();
 
-return image.data.publicUrl;
-
+  if(data && data.company_name){
+    document.getElementById("companyName").value = data.company_name;
+  }
 }
 
 async function addProduct(){
+  const name = document.getElementById("name").value;
+  const price = document.getElementById("price").value;
+  const description = document.getElementById("description").value;
+  const file = document.getElementById("image").files[0];
 
-const name = document.getElementById("name").value.trim();
-const price = document.getElementById("price").value.trim();
-const description = document.getElementById("description").value.trim();
-const file = document.getElementById("image").files[0];
+  if(!name || !price || !file){
+    alert("Заполни название, цену и фото");
+    return;
+  }
 
-if(!name){
-alert("Введите название");
-return;
-}
+  const fileName = "product-" + Date.now() + "-" + file.name;
 
-if(!price){
-alert("Введите цену");
-return;
-}
+  const { error } = await sb.storage
+    .from("product-images")
+    .upload(fileName, file);
 
-if(!description){
-alert("Введите описание");
-return;
-}
+  if(error){
+    alert("Ошибка загрузки фото товара: " + error.message);
+    return;
+  }
 
-if(!file){
-alert("Выберите фото");
-return;
-}
+  const { data } = sb.storage
+    .from("product-images")
+    .getPublicUrl(fileName);
 
-const imageUrl = await uploadImage(file);
+  const { error: dbError } = await sb
+    .from("products")
+    .insert({
+      name,
+      price,
+      description,
+      image_url: data.publicUrl
+    });
 
-if(!imageUrl){
-return;
-}
+  if(dbError){
+    alert("Ошибка добавления товара: " + dbError.message);
+    return;
+  }
 
-const insert = await sb
-.from("products")
-.insert({
-name:name,
-price:price,
-description:description,
-image_url:imageUrl
-});
+  document.getElementById("name").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("image").value = "";
 
-if(insert.error){
-alert("Ошибка добавления товара: " + insert.error.message);
-return;
-}
-
-alert("Товар добавлен");
-
-document.getElementById("name").value = "";
-document.getElementById("price").value = "";
-document.getElementById("description").value = "";
-document.getElementById("image").value = "";
-
-loadProducts();
-
+  alert("Товар добавлен");
+  loadProducts();
 }
 
 async function loadProducts(){
+  const { data, error } = await sb
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-const res = await sb
-.from("products")
-.select("*")
-.order("created_at",{ascending:false});
+  if(error){
+    alert("Ошибка загрузки товаров: " + error.message);
+    return;
+  }
 
-if(res.error){
-document.getElementById("products").innerHTML = "Ошибка загрузки товаров";
-console.log(res.error);
-return;
-}
-
-let html = "";
-
-res.data.forEach(item=>{
-
-html += `
-<div class="card">
-
-<h3>${item.name || ""}</h3>
-<p><b>Цена:</b> ${item.price || ""} ₸</p>
-<p>${item.description || ""}</p>
-<img src="${item.image_url || ""}">
-
-<button onclick="openEdit('${item.id}')">Редактировать</button>
-<button class="btn-red" onclick="deleteProduct('${item.id}')">Удалить</button>
-
-<div class="edit-box" id="edit-${item.id}">
-
-<h3>Редактирование</h3>
-
-<input id="edit-name-${item.id}" value="${escapeHtml(item.name || "")}" placeholder="Название">
-
-<input id="edit-price-${item.id}" value="${escapeHtml(item.price || "")}" placeholder="Цена">
-
-<textarea id="edit-description-${item.id}" placeholder="Описание">${escapeHtml(item.description || "")}</textarea>
-
-<p class="small">Новое фото можно не выбирать. Тогда останется старое.</p>
-
-<input type="file" id="edit-image-${item.id}" accept="image/*">
-
-<button onclick="saveProduct('${item.id}','${item.image_url || ""}')">Сохранить изменения</button>
-
-<button class="btn-gray" onclick="closeEdit('${item.id}')">Отмена</button>
-
-</div>
-
-</div>
-`;
-
-});
-
-document.getElementById("products").innerHTML = html;
-
-}
-
-function openEdit(id){
-document.getElementById("edit-" + id).style.display = "block";
-}
-
-function closeEdit(id){
-document.getElementById("edit-" + id).style.display = "none";
-}
-
-async function saveProduct(id, oldImageUrl){
-
-const name = document.getElementById("edit-name-" + id).value.trim();
-const price = document.getElementById("edit-price-" + id).value.trim();
-const description = document.getElementById("edit-description-" + id).value.trim();
-const file = document.getElementById("edit-image-" + id).files[0];
-
-if(!name){
-alert("Введите название");
-return;
-}
-
-if(!price){
-alert("Введите цену");
-return;
-}
-
-if(!description){
-alert("Введите описание");
-return;
-}
-
-let imageUrl = oldImageUrl;
-
-if(file){
-const newImage = await uploadImage(file);
-if(newImage){
-imageUrl = newImage;
-}
-}
-
-const update = await sb
-.from("products")
-.update({
-name:name,
-price:price,
-description:description,
-image_url:imageUrl
-})
-.eq("id",id);
-
-if(update.error){
-alert("Ошибка сохранения: " + update.error.message);
-return;
-}
-
-alert("Изменения сохранены");
-
-loadProducts();
-
+  document.getElementById("products").innerHTML = data.map(item => `
+    <div class="card">
+      <h3>${item.name}</h3>
+      <p>${item.description || ""}</p>
+      <strong>${item.price}</strong>
+      <img src="${item.image_url}">
+      <button onclick="deleteProduct('${item.id}')">Удалить</button>
+    </div>
+  `).join("");
 }
 
 async function deleteProduct(id){
+  if(!confirm("Удалить товар?")) return;
 
-const ok = confirm("Удалить этот товар?");
+  const { error } = await sb
+    .from("products")
+    .delete()
+    .eq("id", id);
 
-if(!ok){
-return;
+  if(error){
+    alert("Ошибка удаления: " + error.message);
+    return;
+  }
+
+  loadProducts();
 }
 
-const result = await sb
-.from("products")
-.delete()
-.eq("id",id);
-
-if(result.error){
-alert("Ошибка удаления: " + result.error.message);
-return;
-}
-
-loadProducts();
-
-}
-
-function escapeHtml(text){
-
-return String(text)
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
-}
-
-sb.auth.getSession().then(({data})=>{
-if(data.session){
-showAdmin();
-}
+sb.auth.getSession().then(({ data }) => {
+  if(data.session){
+    showAdmin();
+  }
 });
 </script>
 
