@@ -3,16 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QAZPLIT — Брусчатка в Павлодаре</title>
+<title>QAZ PLIT — Брусчатка в Павлодаре</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
 font-family:Arial,sans-serif;
@@ -20,22 +16,15 @@ background:#07090b;
 color:#fff;
 }
 
-a{
-color:inherit;
-text-decoration:none;
-}
+a{color:inherit;text-decoration:none}
+.gold{color:#d99a16}
 
-.gold{
-color:#d99a16;
-}
-
-/* Шапка */
 .header{
-height:76px;
+min-height:86px;
 background:#080a0d;
 display:flex;
 align-items:center;
-padding:0 46px;
+padding:8px 46px;
 border-bottom:1px solid rgba(255,255,255,.08);
 position:sticky;
 top:0;
@@ -45,50 +34,46 @@ z-index:10;
 .logo{
 display:flex;
 align-items:center;
-gap:12px;
+gap:16px;
 margin-right:auto;
 }
 
-.logo-icon{
-width:34px;
-height:34px;
-border:3px solid #d99a16;
-transform:rotate(45deg);
-position:relative;
-}
-
-.logo-icon:after{
-content:"";
-position:absolute;
-inset:6px;
-border:2px solid #d99a16;
+.site-logo{
+width:82px;
+height:82px;
+object-fit:contain;
+background:white;
+padding:6px;
+border-radius:14px;
+box-shadow:0 5px 25px rgba(0,0,0,.25);
 }
 
 .logo-title{
 font-size:30px;
-font-weight:800;
+font-weight:900;
 color:#d99a16;
+letter-spacing:1px;
 }
 
 .logo-subtitle{
 font-size:10px;
-color:#b7b7b7;
+color:#bcbcbc;
+letter-spacing:1px;
+text-transform:uppercase;
 }
 
 .menu{
 display:flex;
-gap:34px;
+gap:30px;
 font-size:14px;
 font-weight:700;
 text-transform:uppercase;
 }
 
-.menu a:hover{
-color:#d99a16;
-}
+.menu a:hover{color:#d99a16}
 
 .top-btn{
-margin-left:36px;
+margin-left:30px;
 border:1px solid #d99a16;
 color:#d99a16;
 padding:13px 22px;
@@ -96,12 +81,11 @@ border-radius:5px;
 font-weight:700;
 }
 
-/* Главный экран */
 .hero{
 min-height:620px;
 background:
 linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.35)),
-url("./uploads/главная 1.jpeg");
+url("./images/glavnaya.jpg");
 background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
@@ -147,9 +131,7 @@ font-size:16px;
 transition:.25s;
 }
 
-.btn:hover{
-transform:translateY(-2px);
-}
+.btn:hover{transform:translateY(-2px)}
 
 .btn-gold{
 background:linear-gradient(135deg,#e0a326,#c47b0d);
@@ -169,7 +151,6 @@ background:#d99a16;
 color:#000;
 }
 
-/* Преимущества */
 .features{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -200,7 +181,6 @@ color:#c7c7c7;
 font-size:13px;
 }
 
-/* Секции */
 .section{
 padding:58px 46px;
 max-width:1280px;
@@ -223,7 +203,6 @@ background:#d99a16;
 margin:14px auto 0;
 }
 
-/* Каталог */
 .catalog{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -250,9 +229,7 @@ display:block;
 transition:.3s;
 }
 
-.card:hover img{
-transform:scale(1.04);
-}
+.card:hover img{transform:scale(1.04)}
 
 .card-body{
 padding:18px;
@@ -303,22 +280,6 @@ background:#d99a16;
 color:#000;
 }
 
-/* О компании */
-.about-box{
-background:#111417;
-border:1px solid rgba(255,255,255,.08);
-border-radius:14px;
-padding:32px;
-line-height:1.7;
-color:#ddd;
-font-size:17px;
-}
-
-.about-box strong{
-color:#d99a16;
-}
-
-/* Наши работы */
 .works{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -340,7 +301,18 @@ transform:scale(1.03);
 box-shadow:0 20px 40px rgba(0,0,0,.4);
 }
 
-/* Подвал */
+.about-box{
+background:#111417;
+border:1px solid rgba(255,255,255,.08);
+border-radius:14px;
+padding:32px;
+line-height:1.7;
+color:#ddd;
+font-size:17px;
+}
+
+.about-box strong{color:#d99a16}
+
 .footer{
 background:#050607;
 padding:26px 46px;
@@ -367,7 +339,6 @@ color:#aaa;
 margin-bottom:4px;
 }
 
-/* Окно подробнее */
 .modal{
 display:none;
 position:fixed;
@@ -493,12 +464,20 @@ max-height:95%;
 object-fit:contain;
 }
 
-/* Телефон */
 @media(max-width:900px){
 .header{
-padding:18px;
+padding:14px 18px;
 height:auto;
 flex-wrap:wrap;
+}
+
+.site-logo{
+width:68px;
+height:68px;
+}
+
+.logo-title{
+font-size:24px;
 }
 
 .menu{
@@ -519,21 +498,14 @@ min-height:520px;
 background-position:center;
 }
 
-.hero h1{
-font-size:38px;
-}
-
-.hero p{
-font-size:18px;
-}
+.hero h1{font-size:38px}
+.hero p{font-size:18px}
 
 .hero-buttons{
 flex-direction:column;
 }
 
-.btn{
-width:100%;
-}
+.btn{width:100%}
 
 .features,
 .footer{
@@ -551,9 +523,7 @@ padding-right:22px;
 grid-template-columns:1fr;
 }
 
-.modal-img{
-height:42vh;
-}
+.modal-img{height:42vh}
 
 .modal-info{
 max-height:45vh;
@@ -567,10 +537,10 @@ padding:20px;
 
 <header class="header">
 <div class="logo">
-<div class="logo-icon"></div>
+<img src="./images/logo.png" alt="QAZ PLIT" class="site-logo">
 <div>
-<div class="logo-title">QAZPLITT</div>
-<div class="logo-subtitle">БРУСЧАТКА ПРЕМИУМ КАЧЕСТВА</div>
+<div class="logo-title">QAZ PLIT</div>
+<div class="logo-subtitle">Производство тротуарной плитки</div>
 </div>
 </div>
 
@@ -628,25 +598,23 @@ padding:20px;
 
 <section id="works" class="section">
 <h2 class="section-title">Наши работы</h2>
-
 <div class="works">
-<img src="./images/glavnaya.jpg" alt="Брусчатка QAZPLITT">
-<img src="./images/glavnaya.jpg" alt="Брусчатка QAZPLITT">
-<img src="./images/glavnaya.jpg" alt="Брусчатка QAZPLITT">
-<img src="./images/glavnaya.jpg" alt="Брусчатка QAZPLITT">
+<img src="./images/glavnaya.jpg" alt="Брусчатка QAZ PLIT">
+<img src="./images/glavnaya.jpg" alt="Брусчатка QAZ PLIT">
+<img src="./images/glavnaya.jpg" alt="Брусчатка QAZ PLIT">
+<img src="./images/glavnaya.jpg" alt="Брусчатка QAZ PLIT">
 </div>
 </section>
 
 <section id="about" class="section">
 <h2 class="section-title">О компании</h2>
-
 <div class="about-box">
-<strong>QAZPLITT</strong> — компания по продаже и укладке брусчатки в Павлодаре.
-Мы помогаем подобрать подходящую тротуарную плитку для двора, дорожек, парковки,
-частного дома и коммерческих объектов.
+<strong>QAZ PLIT</strong> — производство и продажа тротуарной плитки в Павлодаре.
+Мы предлагаем качественную брусчатку для дворов, дорожек, парковок, частных домов
+и коммерческих объектов.
 <br><br>
-Работаем с качественной продукцией, консультируем по выбору цвета, формы и объёма,
-а также можем организовать доставку и укладку под ключ.
+Помогаем подобрать цвет, форму и объём плитки, а также можем организовать доставку
+и укладку под ключ.
 </div>
 </section>
 
@@ -684,7 +652,6 @@ padding:20px;
 </div>
 </footer>
 
-<!-- Модальное окно товара -->
 <div id="productModal" class="modal" onclick="closeProductOutside(event)">
 <div class="modal-box">
 <button class="modal-close" onclick="closeProduct()">×</button>
@@ -705,7 +672,6 @@ padding:20px;
 </div>
 </div>
 
-<!-- Увеличение фото -->
 <div id="zoomModal" class="zoom-modal" onclick="closeZoom()">
 <img id="zoomImage" src="">
 </div>
