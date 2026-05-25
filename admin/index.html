@@ -2,18 +2,18 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>QAZ PLIT Админка</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 body{
-margin:0;
 background:#111;
-font-family:Arial;
 color:white;
-padding:25px;
+font-family:Arial;
+padding:20px;
+margin:0;
 }
 
 .box{
@@ -21,7 +21,7 @@ max-width:900px;
 margin:auto;
 background:#1d1d1d;
 padding:25px;
-border-radius:15px;
+border-radius:12px;
 }
 
 input,
@@ -34,15 +34,14 @@ box-sizing:border-box;
 }
 
 button{
-background:#d99a16;
-border:0;
+background:#d79a18;
+border:none;
 font-weight:bold;
 cursor:pointer;
-border-radius:8px;
 }
 
 .card{
-background:#2a2a2a;
+background:#2b2b2b;
 padding:15px;
 margin-top:15px;
 border-radius:10px;
@@ -50,17 +49,12 @@ border-radius:10px;
 
 img{
 max-width:180px;
-display:block;
+border-radius:10px;
 margin-top:10px;
-border-radius:8px;
+display:block;
 }
-
-hr{
-margin:25px 0;
-border:1px solid #333;
-}
-
 </style>
+
 </head>
 
 <body>
@@ -95,25 +89,17 @@ style="display:none">
 
 <h1>
 
-QAZ PLIT Админка
+QAZ PLIT
 
 </h1>
 
-
-
-<h2>
-
-Настройки сайта
-
-</h2>
-
+<h2>Настройки сайта</h2>
 
 <input
 id="companyName"
 placeholder="Название фирмы">
 
-<button
-onclick="saveCompanyName()">
+<button onclick="saveCompanyName()">
 
 Сохранить название
 
@@ -122,26 +108,24 @@ onclick="saveCompanyName()">
 
 
 <input
-id="heroImage"
-type="file">
+type="file"
+id="heroImage">
 
-<button
-onclick="uploadHero()">
+<button onclick="uploadHero()">
 
-Обновить главное фото
+Изменить главное фото
 
 </button>
 
 
 
 <input
-id="logoImage"
-type="file">
+type="file"
+id="logoImage">
 
-<button
-onclick="uploadLogo()">
+<button onclick="uploadLogo()">
 
-Обновить логотип
+Изменить логотип
 
 </button>
 
@@ -156,7 +140,6 @@ onclick="uploadLogo()">
 Добавить товар
 
 </h2>
-
 
 <input
 id="name"
@@ -174,20 +157,19 @@ placeholder="Описание"></textarea>
 
 
 <input
-id="image"
-type="file">
+type="file"
+id="image">
 
 
-<button
-onclick="addProduct()">
+<button onclick="addProduct()">
 
 Добавить товар
 
 </button>
 
 
-<button
-onclick="logout()">
+
+<button onclick="logout()">
 
 Выйти
 
@@ -203,14 +185,14 @@ onclick="logout()">
 
 <script>
 
-const SUPABASE_URL=
+const SUPABASE_URL =
 "https://qsoukelbdkojofqyorfu.supabase.co";
 
-const SUPABASE_KEY=
-"СЮДА_КЛЮЧ";
+const SUPABASE_KEY =
+"YOUR_SUPABASE_KEY";
 
-const sb=
-window.supabase.createClient(
+const sb =
+supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
@@ -219,17 +201,17 @@ SUPABASE_KEY
 
 async function login(){
 
-let email=
+let email =
 document.getElementById(
 "email"
 ).value;
 
-let password=
+let password =
 document.getElementById(
 "password"
 ).value;
 
-let {error}=
+let {error} =
 await sb.auth
 .signInWithPassword({
 
@@ -270,15 +252,13 @@ document
 .getElementById(
 "login"
 )
-.style.display=
-"none";
+.style.display="none";
 
 document
 .getElementById(
 "admin"
 )
-.style.display=
-"block";
+.style.display="block";
 
 loadProducts();
 
@@ -290,12 +270,11 @@ loadSettings();
 
 async function saveCompanyName(){
 
-let name=
+let name =
 document.getElementById(
 "companyName"
 ).value;
 
-let {error}=
 await sb
 .from(
 "site_settings"
@@ -308,16 +287,8 @@ company_name:name
 
 });
 
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
 alert(
-"Название сохранено"
+"Сохранено"
 );
 
 }
@@ -326,12 +297,12 @@ alert(
 
 async function uploadHero(){
 
-let file=
+let file =
 document.getElementById(
 "heroImage"
 ).files[0];
 
-let filename=
+let filename =
 "hero-"+Date.now();
 
 await sb.storage
@@ -343,7 +314,7 @@ filename,
 file
 );
 
-let url=
+let url =
 sb.storage
 .from(
 "site-images"
@@ -375,12 +346,12 @@ alert(
 
 async function uploadLogo(){
 
-let file=
+let file =
 document.getElementById(
 "logoImage"
 ).files[0];
 
-let filename=
+let filename =
 "logo-"+Date.now();
 
 await sb.storage
@@ -392,7 +363,7 @@ filename,
 file
 );
 
-let url=
+let url =
 sb.storage
 .from(
 "site-images"
@@ -422,62 +393,29 @@ alert(
 
 
 
-async function loadSettings(){
-
-let res=
-await sb
-.from(
-"site_settings"
-)
-.select("*")
-.eq(
-"id",
-1
-)
-.single();
-
-if(
-res.data
-){
-
-document
-.getElementById(
-"companyName"
-)
-.value=
-
-res.data.company_name
-||"";
-
-}
-
-}
-
-
-
 async function addProduct(){
 
-let name=
+let name =
 document.getElementById(
 "name"
 ).value;
 
-let price=
+let price =
 document.getElementById(
 "price"
 ).value;
 
-let description=
+let description =
 document.getElementById(
 "description"
 ).value;
 
-let file=
+let file =
 document.getElementById(
 "image"
 ).files[0];
 
-let filename=
+let filename =
 Date.now()
 +"-"+file.name;
 
@@ -490,7 +428,7 @@ filename,
 file
 );
 
-let url=
+let url =
 sb.storage
 .from(
 "product-images"
@@ -506,9 +444,7 @@ await sb
 .insert({
 
 name,
-
 price,
-
 description,
 
 image_url:
@@ -522,9 +458,39 @@ loadProducts();
 
 
 
+async function loadSettings(){
+
+let res =
+await sb
+.from(
+"site_settings"
+)
+.select("*")
+.eq(
+"id",
+1
+)
+.single();
+
+if(res.data){
+
+document
+.getElementById(
+"companyName"
+)
+.value =
+res.data.company_name
+||"";
+
+}
+
+}
+
+
+
 async function loadProducts(){
 
-let res=
+let res =
 await sb
 .from(
 "products"
@@ -536,7 +502,7 @@ let html="";
 res.data.forEach(
 item=>{
 
-html+=`
+html += `
 
 <div class="card">
 
@@ -579,16 +545,14 @@ document
 .getElementById(
 "products"
 )
-.innerHTML=
+.innerHTML =
 html;
 
 }
 
 
 
-async function deleteProduct(
-id
-){
+async function deleteProduct(id){
 
 await sb
 .from(
