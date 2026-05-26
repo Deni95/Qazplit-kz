@@ -2,290 +2,766 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QAZ PLIT Админка</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QAZPLIT — Брусчатка в Павлодаре</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{background:#111;color:white;font-family:Arial;padding:20px;margin:0}
-.box{max-width:900px;margin:auto;background:#1d1d1d;padding:25px;border-radius:12px}
-input,textarea,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box}
-button{background:#d79a18;border:none;font-weight:bold;cursor:pointer;border-radius:8px}
-.card{background:#2b2b2b;padding:15px;margin-top:15px;border-radius:10px}
-img{max-width:180px;border-radius:10px;margin-top:10px;display:block}
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Arial,sans-serif;
+background:#07090b;
+color:#fff;
+}
+
+a{color:inherit;text-decoration:none}
+.gold{color:#d99a16}
+
+.header{
+min-height:86px;
+background:#080a0d;
+display:flex;
+align-items:center;
+padding:8px 46px;
+border-bottom:1px solid rgba(255,255,255,.08);
+position:sticky;
+top:0;
+z-index:10;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:16px;
+margin-right:auto;
+}
+
+.site-logo{
+width:82px;
+height:82px;
+object-fit:contain;
+background:white;
+padding:6px;
+border-radius:14px;
+box-shadow:0 5px 25px rgba(0,0,0,.25);
+}
+
+.logo-title{
+font-size:30px;
+font-weight:900;
+color:#d99a16;
+letter-spacing:1px;
+}
+
+.logo-subtitle{
+font-size:10px;
+color:#bcbcbc;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+.menu{
+display:flex;
+gap:30px;
+font-size:14px;
+font-weight:700;
+text-transform:uppercase;
+}
+
+.menu a:hover{color:#d99a16}
+
+.top-btn{
+margin-left:30px;
+border:1px solid #d99a16;
+color:#d99a16;
+padding:13px 22px;
+border-radius:5px;
+font-weight:700;
+}
+
+.hero{
+min-height:620px;
+background:
+linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.35)),
+url("./images/glavnaya.jpg");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+padding:90px 46px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.hero h1{
+font-size:60px;
+line-height:1.1;
+text-transform:uppercase;
+max-width:760px;
+margin-bottom:24px;
+font-weight:900;
+text-shadow:0 4px 20px rgba(0,0,0,.8);
+}
+
+.hero p{
+font-size:23px;
+line-height:1.6;
+max-width:560px;
+margin-bottom:34px;
+color:#ececec;
+text-shadow:0 2px 10px rgba(0,0,0,.8);
+}
+
+.hero-buttons{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+}
+
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:17px 28px;
+border-radius:8px;
+font-weight:800;
+font-size:16px;
+transition:.25s;
+}
+
+.btn:hover{transform:translateY(-2px)}
+
+.btn-gold{
+background:linear-gradient(135deg,#e0a326,#c47b0d);
+color:white;
+box-shadow:0 10px 30px rgba(212,140,19,.25);
+}
+
+.btn-outline{
+border:1px solid #d99a16;
+background:rgba(0,0,0,.2);
+backdrop-filter:blur(5px);
+color:white;
+}
+
+.btn-outline:hover{
+background:#d99a16;
+color:#000;
+}
+
+.features{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+background:#101316;
+padding:24px 46px;
+gap:22px;
+}
+
+.feature{
+display:flex;
+gap:14px;
+align-items:center;
+}
+
+.feature-icon{
+color:#d99a16;
+font-size:30px;
+}
+
+.feature strong{
+display:block;
+font-size:15px;
+margin-bottom:4px;
+}
+
+.feature span{
+color:#c7c7c7;
+font-size:13px;
+}
+
+.section{
+padding:58px 46px;
+max-width:1280px;
+margin:0 auto;
+}
+
+.section-title{
+text-align:center;
+font-size:34px;
+text-transform:uppercase;
+margin-bottom:36px;
+}
+
+.section-title:after{
+content:"";
+display:block;
+width:130px;
+height:2px;
+background:#d99a16;
+margin:14px auto 0;
+}
+
+.catalog{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:24px;
+align-items:stretch;
+}
+
+.card{
+background:#111417;
+border:1px solid rgba(255,255,255,.08);
+border-radius:10px;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+height:100%;
+min-height:480px;
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+display:block;
+transition:.3s;
+}
+
+.card:hover img{transform:scale(1.04)}
+
+.card-body{
+padding:18px;
+display:flex;
+flex-direction:column;
+flex:1;
+}
+
+.card h3{
+font-size:18px;
+margin-bottom:10px;
+min-height:45px;
+}
+
+.card p{
+color:#cfcfcf;
+font-size:14px;
+line-height:1.5;
+min-height:95px;
+overflow:hidden;
+}
+
+.price{
+margin-top:auto;
+color:#d99a16;
+font-weight:800;
+font-size:18px;
+padding-top:15px;
+}
+
+.more{
+display:block;
+width:100%;
+margin-top:18px;
+text-align:center;
+border:1px solid #d99a16;
+color:#d99a16;
+background:transparent;
+padding:12px;
+border-radius:4px;
+font-weight:700;
+font-size:14px;
+cursor:pointer;
+}
+
+.more:hover{
+background:#d99a16;
+color:#000;
+}
+
+.works{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:22px;
+}
+
+.works img{
+width:100%;
+height:260px;
+object-fit:cover;
+border-radius:14px;
+transition:.3s;
+cursor:pointer;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.works img:hover{
+transform:scale(1.03);
+box-shadow:0 20px 40px rgba(0,0,0,.4);
+}
+
+.about-box{
+background:#111417;
+border:1px solid rgba(255,255,255,.08);
+border-radius:14px;
+padding:32px;
+line-height:1.7;
+color:#ddd;
+font-size:17px;
+}
+
+.about-box strong{color:#d99a16}
+
+.footer{
+background:#050607;
+padding:26px 46px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+border-top:1px solid rgba(255,255,255,.08);
+}
+
+.footer-item{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.footer-icon{
+color:#d99a16;
+font-size:25px;
+}
+
+.footer small{
+display:block;
+color:#aaa;
+margin-bottom:4px;
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.88);
+z-index:9999;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.modal-box{
+background:#111417;
+width:95%;
+max-width:1100px;
+max-height:90vh;
+border-radius:16px;
+position:relative;
+border:1px solid rgba(255,255,255,.12);
+overflow:hidden;
+}
+
+.modal-grid{
+display:grid;
+grid-template-columns:55% 45%;
+max-height:90vh;
+}
+
+.modal-photo-wrap{
+background:#000;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:15px;
+}
+
+.modal-img{
+width:100%;
+height:70vh;
+object-fit:contain;
+border-radius:10px;
+}
+
+.modal-info{
+padding:28px;
+overflow-y:auto;
+max-height:90vh;
+}
+
+.modal-info h2{
+font-size:30px;
+margin-bottom:12px;
+}
+
+.modal-close{
+position:absolute;
+top:10px;
+right:15px;
+z-index:10;
+font-size:38px;
+background:rgba(0,0,0,.45);
+border:none;
+color:white;
+cursor:pointer;
+width:46px;
+height:46px;
+border-radius:50%;
+line-height:40px;
+}
+
+.modal-price{
+font-size:30px;
+color:#d99a16;
+font-weight:800;
+margin:18px 0;
+}
+
+.modal-desc{
+color:#e5e5e5;
+font-size:17px;
+line-height:1.65;
+white-space:pre-line;
+}
+
+.modal-btn{
+display:block;
+background:linear-gradient(135deg,#e0a326,#c47b0d);
+padding:15px;
+text-align:center;
+border-radius:8px;
+font-weight:800;
+margin-top:24px;
+}
+
+.zoom-btn{
+position:absolute;
+bottom:25px;
+right:25px;
+background:#d99a16;
+color:#000;
+border:none;
+padding:12px 18px;
+border-radius:8px;
+font-weight:800;
+cursor:pointer;
+}
+
+.zoom-modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.96);
+z-index:10000;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.zoom-modal img{
+max-width:95%;
+max-height:95%;
+object-fit:contain;
+}
+
+@media(max-width:900px){
+.header{
+padding:14px 18px;
+height:auto;
+flex-wrap:wrap;
+}
+
+.site-logo{
+width:68px;
+height:68px;
+}
+
+.logo-title{
+font-size:24px;
+}
+
+.menu{
+width:100%;
+margin-top:18px;
+gap:16px;
+flex-wrap:wrap;
+}
+
+.top-btn{
+margin-left:0;
+margin-top:16px;
+}
+
+.hero{
+padding:70px 22px;
+min-height:520px;
+background-position:center;
+}
+
+.hero h1{font-size:38px}
+.hero p{font-size:18px}
+
+.hero-buttons{
+flex-direction:column;
+}
+
+.btn{width:100%}
+
+.features,
+.footer{
+grid-template-columns:1fr;
+padding-left:22px;
+padding-right:22px;
+}
+
+.section{
+padding-left:22px;
+padding-right:22px;
+}
+
+.modal-grid{
+grid-template-columns:1fr;
+}
+
+.modal-img{height:42vh}
+
+.modal-info{
+max-height:45vh;
+padding:20px;
+}
+}
 </style>
 </head>
 
 <body>
 
-<div class="box" id="login">
-  <h1>Вход администратора</h1>
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Пароль">
-  <button onclick="login()">Войти</button>
+<header class="header">
+<div class="logo">
+<img src="./uploads/Logonew.png" alt="QAZPLIT" class="site-logo">
+<div>
+<div class="logo-title">QAZPLIT</div>
+<div class="logo-subtitle">Производство тротуарной плитки</div>
+</div>
 </div>
 
-<div class="box" id="admin" style="display:none">
-  <h1>QAZPLIT</h1>
+<nav class="menu">
+<a href="#">Главная</a>
+<a href="#catalog">Каталог</a>
+<a href="#works">Наши работы</a>
+<a href="#about">О компании</a>
+<a href="#contacts">Контакты</a>
+</nav>
 
-  
+<a class="top-btn" href="https://wa.me/+7771233002">Связаться с нами</a>
+</header>
 
-  <hr>
+<section class="hero">
+<h1>Премиальная <span class="gold">брусчатка</span><br>в Павлодаре</h1>
+<p></p>
 
-  <h2>Добавить товар</h2>
-  <input id="name" placeholder="Название">
-  <input id="price" placeholder="Цена">
-  <textarea id="description" placeholder="Описание"></textarea>
-  <input type="file" id="image">
-  <button onclick="addProduct()">Добавить товар</button>
+<div class="hero-buttons">
+<a class="btn btn-gold" href="https://wa.me/+7771233002">Написать в WhatsApp</a>
+<a class="btn btn-outline" href="tel:+7771233002">Позвонить</a>
+</div>
+</section>
 
-  <button onclick="logout()">Выйти</button>
+<section class="features">
+<div class="feature">
+<div class="feature-icon">▣</div>
+<div>
+<strong>Качество</strong>
+<span>Срок службы тротуарной плитки от 10 лет и более.</span>
+</div>
+</div>
 
-  <div id="products"></div>
+<div class="feature">
+<div class="feature-icon">▤</div>
+<div>
+<strong>Гарантия</strong>
+<span>На всю продукцию — 3 года.</span>
+</div>
+</div>
+
+<div class="feature">
+<div class="feature-icon">◎</div>
+<div>
+<strong>Консультация</strong>
+<span>Поможем подобрать подходящий вариант.</span>
+</div>
+</div>
+</section>
+
+<section id="catalog" class="section">
+<h2 class="section-title">Каталог брусчатки</h2>
+<div class="catalog" id="products">Загрузка товаров...</div>
+</section>
+
+<section id="works" class="section">
+<h2 class="section-title">Наши работы</h2>
+<div class="works">
+<img src="./images/glavnaya.jpg" alt="Брусчатка QAZ PLIT">
+<img src="./images/glavnaya.jpg" alt="Брусчатка QAZ PLIT">
+<img src="./images/glavnaya.jpg" alt="Брусчатка QAZ PLIT">
+<img src="./images/glavnaya.jpg" alt="Брусчатка QAZ PLIT">
+</div>
+</section>
+
+<section id="about" class="section">
+<h2 class="section-title">О компании</h2>
+<div class="about-box">
+<strong>QAZPLIT</strong> — производство и продажа тротуарной плитки в Павлодаре.
+Мы предлагаем качественную брусчатку для дворов, дорожек, парковок, частных домов
+и коммерческих объектов.
+<br><br>
+Помогаем подобрать цвет, форму и объём плитки.
+</div>
+</section>
+
+<footer id="contacts" class="footer">
+<div class="footer-item">
+<div class="footer-icon">⌖</div>
+<div>
+<small>Адрес</small>
+<span>РК, г. Павлодар, ул. Торговая, 17/5</span>
+</div>
+</div>
+
+<div class="footer-item">
+<div class="footer-icon">☎</div>
+<div>
+<small>Телефон</small>
+<span>+7 777 123 3002</span>
+</div>
+</div>
+
+<div class="footer-item">
+<div class="footer-icon">☏</div>
+<div>
+<small>WhatsApp</small>
+<a href="https://wa.me/77073908307">Написать нам</a>
+</div>
+</div>
+
+<div class="footer-item">
+<div class="footer-icon">◷</div>
+<div>
+<small>Режим работы</small>
+<span>Пн - Вс: 9:00 - 17:00<br>без перерыва на обед</span>
+</div>
+</div>
+</footer>
+
+<div id="productModal" class="modal" onclick="closeProductOutside(event)">
+<div class="modal-box">
+<button class="modal-close" onclick="closeProduct()">×</button>
+
+<div class="modal-grid">
+<div class="modal-photo-wrap">
+<img id="modalImage" class="modal-img" src="">
+<button class="zoom-btn" onclick="zoomImage(event)">🔍 Увеличить</button>
+</div>
+
+<div class="modal-info">
+<h2 id="modalTitle"></h2>
+<div id="modalPrice" class="modal-price"></div>
+<div id="modalDescription" class="modal-desc"></div>
+<a id="modalWhatsapp" class="modal-btn" href="#" target="_blank">Написать в WhatsApp</a>
+</div>
+</div>
+</div>
+</div>
+
+<div id="zoomModal" class="zoom-modal" onclick="closeZoom()">
+<img id="zoomImage" src="">
 </div>
 
 <script>
 const SUPABASE_URL = "https://qsoukelbdkojofqyorfu.supabase.co";
-
 const SUPABASE_KEY = "sb_publishable_dek8j5Pe9ds1mX1S_X5ylw_OiJGRU47";
 
-const sb = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true
-    }
-  }
-);
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-async function login(){
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+let allProducts = [];
 
-  const { error } = await sb.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  showAdmin();
+function shortText(text, limit = 90){
+text = String(text || "");
+if(text.length <= limit) return text;
+return text.slice(0, limit).trim() + "...";
 }
 
-async function logout(){
-  await sb.auth.signOut();
-  location.reload();
-}
-
-function showAdmin(){
-  document.getElementById("login").style.display = "none";
-  document.getElementById("admin").style.display = "block";
-  loadProducts();
-  loadSettings();
-}
-
-async function saveCompanyName(){
-  const name = document.getElementById("companyName").value;
-
-  const { error } = await sb
-    .from("site_settings")
-    .upsert({
-      id: 1,
-      company_name: name
-    });
-
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  alert("Сохранено");
-}
-
-async function uploadHero(){
-  const file = document.getElementById("heroImage").files[0];
-
-  if(!file){
-    alert("Выберите фото");
-    return;
-  }
-
-  const filename = "hero-" + Date.now() + "-" + file.name;
-
-  const { error } = await sb.storage
-    .from("site-images")
-    .upload(filename, file);
-
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  const url = sb.storage
-    .from("site-images")
-    .getPublicUrl(filename);
-
-  const { error: saveError } = await sb
-    .from("site_settings")
-    .upsert({
-      id: 1,
-      hero_image_url: url.data.publicUrl
-    });
-
-  if(saveError){
-    alert(saveError.message);
-    return;
-  }
-
-  alert("Главное фото обновлено");
-}
-
-async function uploadLogo(){
-  const file = document.getElementById("logoImage").files[0];
-
-  if(!file){
-    alert("Выберите логотип");
-    return;
-  }
-
-  const filename = "logo-" + Date.now() + "-" + file.name;
-
-  const { error } = await sb.storage
-    .from("site-images")
-    .upload(filename, file);
-
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  const url = sb.storage
-    .from("site-images")
-    .getPublicUrl(filename);
-
-  const { error: saveError } = await sb
-    .from("site_settings")
-    .upsert({
-      id: 1,
-      logo_url: url.data.publicUrl
-    });
-
-  if(saveError){
-    alert(saveError.message);
-    return;
-  }
-
-  alert("Логотип обновлён");
-}
-
-async function addProduct(){
-  const name = document.getElementById("name").value;
-  const price = document.getElementById("price").value;
-  const description = document.getElementById("description").value;
-  const file = document.getElementById("image").files[0];
-
-  if(!name || !price || !file){
-    alert("Заполни название, цену и фото");
-    return;
-  }
-
-  const filename = Date.now() + "-" + file.name;
-
-  const { error } = await sb.storage
-    .from("product-images")
-    .upload(filename, file);
-
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  const url = sb.storage
-    .from("product-images")
-    .getPublicUrl(filename);
-
-  const { error: insertError } = await sb
-    .from("products")
-    .insert({
-      name,
-      price,
-      description,
-      image_url: url.data.publicUrl
-    });
-
-  if(insertError){
-    alert(insertError.message);
-    return;
-  }
-
-  alert("Товар добавлен");
-  loadProducts();
-}
-
-async function loadSettings(){
-  const { data } = await sb
-    .from("site_settings")
-    .select("*")
-    .eq("id", 1)
-    .single();
-
-  if(data){
-    document.getElementById("companyName").value = data.company_name || "";
-  }
+function whatsappLink(text){
+return "https://wa.me/77073908307?text=" + encodeURIComponent(text);
 }
 
 async function loadProducts(){
-  const { data, error } = await sb
-    .from("products")
-    .select("*");
+const container = document.getElementById("products");
 
-  if(error){
-    alert(error.message);
-    return;
-  }
+const result = await sb
+.from("products")
+.select("*")
+.order("created_at", { ascending:false });
 
-  let html = "";
-
-  data.forEach(item => {
-    html += `
-      <div class="card">
-        <h3>${item.name}</h3>
-        <p>${item.price}</p>
-        <p>${item.description || ""}</p>
-        <img src="${item.image_url}">
-        <button onclick="deleteProduct('${item.id}')">Удалить</button>
-      </div>
-    `;
-  });
-
-  document.getElementById("products").innerHTML = html;
+if(result.error){
+console.error(result.error);
+container.innerHTML = "Ошибка загрузки товаров";
+return;
 }
 
-async function deleteProduct(id){
-  const { error } = await sb
-    .from("products")
-    .delete()
-    .eq("id", id);
+allProducts = result.data || [];
 
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  loadProducts();
+if(allProducts.length === 0){
+container.innerHTML = "Товары пока не добавлены";
+return;
 }
 
-sb.auth.getSession().then(({ data }) => {
-  if(data.session){
-    showAdmin();
-  }
-});
+container.innerHTML = allProducts.map(product => `
+<div class="card">
+<img src="${product.image_url || "./images/glavnaya.jpg"}" alt="${product.name || "Товар"}">
+<div class="card-body">
+<h3>${product.name || ""}</h3>
+<p>${shortText(product.description, 90)}</p>
+<div class="price">${product.price || ""} ₸</div>
+<button class="more" onclick="openProduct('${product.id}')">Подробнее</button>
+</div>
+</div>
+`).join("");
+}
+
+function openProduct(id){
+const product = allProducts.find(item => String(item.id) === String(id));
+if(!product) return;
+
+document.getElementById("modalTitle").textContent = product.name || "";
+document.getElementById("modalPrice").textContent = (product.price || "") + " ₸";
+document.getElementById("modalDescription").textContent = product.description || "";
+document.getElementById("modalImage").src = product.image_url || "./images/glavnaya.jpg";
+document.getElementById("modalWhatsapp").href = whatsappLink("Здравствуйте, интересует " + (product.name || "товар"));
+
+document.getElementById("productModal").style.display = "flex";
+}
+
+function closeProduct(){
+document.getElementById("productModal").style.display = "none";
+}
+
+function closeProductOutside(event){
+if(event.target.id === "productModal"){
+closeProduct();
+}
+}
+
+function zoomImage(event){
+event.stopPropagation();
+const img = document.getElementById("modalImage").src;
+document.getElementById("zoomImage").src = img;
+document.getElementById("zoomModal").style.display = "flex";
+}
+
+function closeZoom(){
+document.getElementById("zoomModal").style.display = "none";
+}
+
+loadProducts();
 </script>
 
 </body>
