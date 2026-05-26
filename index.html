@@ -738,7 +738,7 @@ if(!product) return;
 document.getElementById("modalTitle").textContent = product.name || "";
 document.getElementById("modalPrice").textContent = (product.price || "") + " ₸";
 document.getElementById("modalDescription").textContent = product.description || "";
-document.getElementById("modalImage").src = product.image_url || "./images/glavnaya.jpg";
+document.getElementById("modalImage").src = product.image_url || "./uploads/project21jpg.jpg";
 document.getElementById("modalWhatsapp").href = whatsappLink("Здравствуйте, интересует " + (product.name || "товар"));
 
 document.getElementById("productModal").style.display = "flex";
