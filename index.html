@@ -532,7 +532,27 @@ font-size:13px;
 grid-template-columns:repeat(2,1fr);
 }
 }
+.slide-btn{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:#d99a16;
+border:none;
+width:45px;
+height:45px;
+border-radius:50%;
+font-size:24px;
+cursor:pointer;
+z-index:5;
+}
 
+.left{
+left:15px;
+}
+
+.right{
+right:15px;
+}
 @media(max-width:900px){
 .header{
 padding:14px 18px;
@@ -750,8 +770,22 @@ padding:20px;
 <div class="modal-grid">
 
 <div class="modal-photo-wrap">
-<img id="modalImage" class="modal-img" src="">
-<button class="zoom-btn" onclick="zoomImage(event)">🔍 Увеличить</button>
+
+<button class="slide-btn left"
+onclick="prevImage()">❮</button>
+
+<img id="modalImage"
+class="modal-img"
+src="">
+
+<button class="slide-btn right"
+onclick="nextImage()">❯</button>
+
+<button class="zoom-btn"
+onclick="zoomImage(event)">
+🔍 Увеличить
+</button>
+
 </div>
 
 <div class="modal-info">
@@ -776,7 +810,9 @@ const SUPABASE_KEY = "sb_publishable_dek8j5Pe9ds1mX1S_X5ylw_OiJGRU47";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let allProducts = [];
-
+let currentImages=[];
+let currentIndex=0;
+  
 function shortText(text, limit = 90){
 text = String(text || "");
 if(text.length <= limit) return text;
@@ -822,16 +858,44 @@ container.innerHTML = allProducts.map(product => `
 }
 
 function openProduct(id){
-const product = allProducts.find(item => String(item.id) === String(id));
+
+const product =
+allProducts.find(
+item => String(item.id)===String(id)
+);
+
 if(!product) return;
 
-document.getElementById("modalTitle").textContent = product.name || "";
-document.getElementById("modalPrice").textContent = (product.price || "") + " ₸";
-document.getElementById("modalDescription").textContent = product.description || "";
-document.getElementById("modalImage").src = product.image_url || "./uploads/project21.jpg.jpg";
-document.getElementById("modalWhatsapp").href = whatsappLink("Здравствуйте, интересует " + (product.name || "товар"));
+currentImages =
+product.images &&
+product.images.length
+? product.images
+: [product.image_url];
 
-document.getElementById("productModal").style.display = "flex";
+currentIndex=0;
+
+document.getElementById(
+"modalImage"
+).src=currentImages[0];
+
+document.getElementById(
+"modalTitle"
+).textContent=product.name||"";
+
+document.getElementById(
+"modalPrice"
+).textContent=
+(product.price||"")+" ₸";
+
+document.getElementById(
+"modalDescription"
+).textContent=
+product.description||"";
+
+document.getElementById(
+"productModal"
+).style.display="flex";
+
 }
 
 function closeProduct(){
@@ -854,7 +918,41 @@ document.getElementById("zoomModal").style.display = "flex";
 function closeZoom(){
 document.getElementById("zoomModal").style.display = "none";
 }
+function nextImage(){
 
+if(currentImages.length<2)
+return;
+
+currentIndex++;
+
+if(currentIndex>=currentImages.length)
+currentIndex=0;
+
+document.getElementById(
+"modalImage"
+).src=
+currentImages[currentIndex];
+
+}
+
+function prevImage(){
+
+if(currentImages.length<2)
+return;
+
+currentIndex--;
+
+if(currentIndex<0)
+currentIndex=
+currentImages.length-1;
+
+document.getElementById(
+"modalImage"
+).src=
+currentImages[currentIndex];
+
+}
+  
 loadProducts();
 </script>
 
