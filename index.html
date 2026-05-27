@@ -8,16 +8,28 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
-3font-family:Arial,sans-serif;
+font-family:Arial,sans-serif;
 background:#07090b;
 color:#fff;
 }
 
-a{color:inherit;text-decoration:none}
-.gold{color:#d99a16}
+a{
+color:inherit;
+text-decoration:none;
+}
+
+.gold{
+color:#d99a16;
+}
+
+/* ШАПКА */
 
 .header{
 min-height:86px;
@@ -34,13 +46,13 @@ z-index:10;
 .logo{
 display:flex;
 align-items:center;
-gap:16px;
+gap:14px;
 margin-right:auto;
 }
 
 .site-logo{
-width:140px;
-height:auto;
+width:90px;
+height:90px;
 object-fit:contain;
 background:none;
 padding:0;
@@ -53,13 +65,15 @@ font-size:30px;
 font-weight:900;
 color:#d99a16;
 letter-spacing:1px;
+line-height:1;
 }
 
 .logo-subtitle{
 font-size:10px;
-color:#bcbcbc;
+color:#ddd;
 letter-spacing:1px;
 text-transform:uppercase;
+margin-top:5px;
 }
 
 .menu{
@@ -70,7 +84,9 @@ font-weight:700;
 text-transform:uppercase;
 }
 
-.menu a:hover{color:#d99a16}
+.menu a:hover{
+color:#d99a16;
+}
 
 .top-btn{
 margin-left:30px;
@@ -80,6 +96,13 @@ padding:13px 22px;
 border-radius:5px;
 font-weight:700;
 }
+
+.top-btn:hover{
+background:#d99a16;
+color:#000;
+}
+
+/* ГЛАВНЫЙ ЭКРАН */
 
 .hero{
 min-height:620px;
@@ -131,7 +154,9 @@ font-size:16px;
 transition:.25s;
 }
 
-.btn:hover{transform:translateY(-2px)}
+.btn:hover{
+transform:translateY(-2px);
+}
 
 .btn-gold{
 background:linear-gradient(135deg,#e0a326,#c47b0d);
@@ -151,35 +176,47 @@ background:#d99a16;
 color:#000;
 }
 
-.features{
+/* ПРЕИМУЩЕСТВА БЕЗ КАРТОЧЕК */
+
+.advantages{
 display:grid;
-grid-template-columns:repeat(3,1fr);
-background:#101316;
-padding:24px 46px;
-gap:22px;
+grid-template-columns:repeat(4,1fr);
+gap:45px;
+padding:38px 46px;
+background:#090d12;
+border-top:1px solid rgba(255,255,255,.05);
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.feature{
+.adv-item{
 display:flex;
-gap:14px;
-align-items:center;
+gap:15px;
+align-items:flex-start;
 }
 
-.feature-icon{
-color:#d99a16;
-font-size:30px;
+.adv-icon{
+width:20px;
+height:20px;
+border:3px solid #d99a16;
+flex-shrink:0;
+margin-top:5px;
 }
 
-.feature strong{
-display:block;
-font-size:15px;
-margin-bottom:4px;
+.adv-item h3{
+font-size:18px;
+margin:0 0 7px;
+color:#fff;
+font-weight:800;
 }
 
-.feature span{
-color:#c7c7c7;
-font-size:13px;
+.adv-item p{
+font-size:14px;
+color:#cfcfcf;
+line-height:1.45;
+margin:0;
 }
+
+/* ОБЩИЕ СЕКЦИИ */
 
 .section{
 padding:58px 46px;
@@ -202,6 +239,8 @@ height:2px;
 background:#d99a16;
 margin:14px auto 0;
 }
+
+/* КАТАЛОГ */
 
 .catalog{
 display:grid;
@@ -229,7 +268,9 @@ display:block;
 transition:.3s;
 }
 
-.card:hover img{transform:scale(1.04)}
+.card:hover img{
+transform:scale(1.04);
+}
 
 .card-body{
 padding:18px;
@@ -280,6 +321,8 @@ background:#d99a16;
 color:#000;
 }
 
+/* РАБОТЫ */
+
 .works{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -301,6 +344,8 @@ transform:scale(1.03);
 box-shadow:0 20px 40px rgba(0,0,0,.4);
 }
 
+/* О КОМПАНИИ */
+
 .about-box{
 background:#111417;
 border:1px solid rgba(255,255,255,.08);
@@ -311,7 +356,11 @@ color:#ddd;
 font-size:17px;
 }
 
-.about-box strong{color:#d99a16}
+.about-box strong{
+color:#d99a16;
+}
+
+/* ПОДВАЛ */
 
 .footer{
 background:#050607;
@@ -338,6 +387,8 @@ display:block;
 color:#aaa;
 margin-bottom:4px;
 }
+
+/* МОДАЛЬНОЕ ОКНО */
 
 .modal{
 display:none;
@@ -464,6 +515,24 @@ max-height:95%;
 object-fit:contain;
 }
 
+/* АДАПТАЦИЯ */
+
+@media(max-width:1050px){
+.menu{
+gap:18px;
+font-size:12px;
+}
+
+.top-btn{
+padding:11px 16px;
+font-size:13px;
+}
+
+.advantages{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
 @media(max-width:900px){
 .header{
 padding:14px 18px;
@@ -472,8 +541,8 @@ flex-wrap:wrap;
 }
 
 .site-logo{
-width:68px;
-height:68px;
+width:70px;
+height:70px;
 }
 
 .logo-title{
@@ -498,16 +567,23 @@ min-height:520px;
 background-position:center;
 }
 
-.hero h1{font-size:38px}
-.hero p{font-size:18px}
+.hero h1{
+font-size:38px;
+}
+
+.hero p{
+font-size:18px;
+}
 
 .hero-buttons{
 flex-direction:column;
 }
 
-.btn{width:100%}
+.btn{
+width:100%;
+}
 
-.features,
+.advantages,
 .footer{
 grid-template-columns:1fr;
 padding-left:22px;
@@ -523,7 +599,9 @@ padding-right:22px;
 grid-template-columns:1fr;
 }
 
-.modal-img{height:42vh}
+.modal-img{
+height:42vh;
+}
 
 .modal-info{
 max-height:45vh;
@@ -536,21 +614,16 @@ padding:20px;
 <body>
 
 <header class="header">
-<div class="logo">
 
-<img
-src="./uploads/Newlogo.png"
-class="site-logo"
-alt="QAZPLIT">
-  
+<div class="logo">
+<img src="./uploads/Newlogo.png" class="site-logo" alt="QAZPLIT">
+
 <div>
 <div class="logo-title">QAZPLIT</div>
-<div class="logo-subtitle">
-Производство тротуарной плитки
+<div class="logo-subtitle">Производство тротуарной плитки</div>
 </div>
 </div>
 
-</div>
 <nav class="menu">
 <a href="#">Главная</a>
 <a href="#catalog">Каталог</a>
@@ -559,53 +632,55 @@ alt="QAZPLIT">
 <a href="#contacts">Контакты</a>
 </nav>
 
-<a class="top-btn" href="https://wa.me/+7771233002">Связаться с нами</a>
+<a class="top-btn" href="https://wa.me/77073908307">Связаться с нами</a>
+
 </header>
 
 <section class="hero">
 <h1>Премиальная <span class="gold">брусчатка</span><br>в Павлодаре</h1>
-<p></p>
 
 <div class="hero-buttons">
-<a class="btn btn-gold" href="https://wa.me/+7771233002">Написать в WhatsApp</a>
-<a class="btn btn-outline" href="tel:+7771233002">Позвонить</a>
+<a class="btn btn-gold" href="https://wa.me/77073908307">Написать в WhatsApp</a>
+<a class="btn btn-outline" href="tel:+77073908307">Позвонить</a>
 </div>
 </section>
 
 <section class="advantages">
-  <div class="adv-card">
-      <div class="icon"></div>
-      <div>
-          <h3>Надежное качество</h3>
-          <p>Износостойкая тротуарная плитка со сроком службы от 10 лет.</p>
-      </div>
-  </div>
 
-  <div class="adv-card">
-      <div class="icon"></div>
-      <div>
-          <h3>Гарантия до 3 лет</h3>
-          <p>Официальная гарантия на продукцию и контроль качества.</p>
-      </div>
-  </div>
+<div class="adv-item">
+<div class="adv-icon"></div>
+<div>
+<h3>Надежное качество</h3>
+<p>Износостойкая тротуарная плитка со сроком службы от 10 лет.</p>
+</div>
+</div>
 
-  <div class="adv-card">
-      <div class="icon"></div>
-      <div>
-          <h3>Бесплатный выезд и замер</h3>
-          <p>Выезд специалиста, замер участка и расчет стоимости бесплатно.</p>
-      </div>
-  </div>
+<div class="adv-item">
+<div class="adv-icon"></div>
+<div>
+<h3>Гарантия 3 года</h3>
+<p>Официальная гарантия на продукцию и контроль качества.</p>
+</div>
+</div>
 
-  <div class="adv-card">
-      <div class="icon"></div>
-      <div>
-          <h3>Консультация специалиста</h3>
-          <p>Подберем форму, цвет и укладку под ваш участок.</p>
-      </div>
-  </div>
+<div class="adv-item">
+<div class="adv-icon"></div>
+<div>
+<h3>Бесплатный замер</h3>
+<p>Выезд специалиста, замер участка и расчет стоимости бесплатно.</p>
+</div>
+</div>
+
+<div class="adv-item">
+<div class="adv-icon"></div>
+<div>
+<h3>Консультация</h3>
+<p>Подберем форму, цвет и укладку под ваш участок.</p>
+</div>
+</div>
+
 </section>
-  
+
 <section id="catalog" class="section">
 <h2 class="section-title">Каталог брусчатки</h2>
 <div class="catalog" id="products">Загрузка товаров...</div>
@@ -613,13 +688,15 @@ alt="QAZPLIT">
 
 <section id="works" class="section">
 <h2 class="section-title">Наши работы</h2>
+
 <div class="works">
-<img src="./uploads/" alt="Брусчатка QAZ PLIT">
+<img src="./uploads/project21.jpg.jpg" alt="Брусчатка QAZPLIT">
 </div>
 </section>
 
 <section id="about" class="section">
 <h2 class="section-title">О компании</h2>
+
 <div class="about-box">
 <strong>QAZPLIT</strong> — производство и продажа тротуарной плитки в Павлодаре.
 Мы предлагаем качественную брусчатку для дворов, дорожек, парковок, частных домов
@@ -630,6 +707,7 @@ alt="QAZPLIT">
 </section>
 
 <footer id="contacts" class="footer">
+
 <div class="footer-item">
 <div class="footer-icon">⌖</div>
 <div>
@@ -642,7 +720,7 @@ alt="QAZPLIT">
 <div class="footer-icon">☎</div>
 <div>
 <small>Телефон</small>
-<span>+7 777 123 3002</span>
+<span>+7 707 390 83 07</span>
 </div>
 </div>
 
@@ -661,13 +739,16 @@ alt="QAZPLIT">
 <span>Пн - Вс: 9:00 - 17:00<br>без перерыва на обед</span>
 </div>
 </div>
+
 </footer>
 
 <div id="productModal" class="modal" onclick="closeProductOutside(event)">
 <div class="modal-box">
+
 <button class="modal-close" onclick="closeProduct()">×</button>
 
 <div class="modal-grid">
+
 <div class="modal-photo-wrap">
 <img id="modalImage" class="modal-img" src="">
 <button class="zoom-btn" onclick="zoomImage(event)">🔍 Увеличить</button>
@@ -679,6 +760,7 @@ alt="QAZPLIT">
 <div id="modalDescription" class="modal-desc"></div>
 <a id="modalWhatsapp" class="modal-btn" href="#" target="_blank">Написать в WhatsApp</a>
 </div>
+
 </div>
 </div>
 </div>
@@ -728,7 +810,7 @@ return;
 
 container.innerHTML = allProducts.map(product => `
 <div class="card">
-<img src="${product.image_url || "./images/glavnaya.jpg"}" alt="${product.name || "Товар"}">
+<img src="${product.image_url || "./uploads/project21.jpg.jpg"}" alt="${product.name || "Товар"}">
 <div class="card-body">
 <h3>${product.name || ""}</h3>
 <p>${shortText(product.description, 90)}</p>
@@ -746,7 +828,7 @@ if(!product) return;
 document.getElementById("modalTitle").textContent = product.name || "";
 document.getElementById("modalPrice").textContent = (product.price || "") + " ₸";
 document.getElementById("modalDescription").textContent = product.description || "";
-document.getElementById("modalImage").src = product.image_url || "./uploads/project21jpg.jpg";
+document.getElementById("modalImage").src = product.image_url || "./uploads/project21.jpg.jpg";
 document.getElementById("modalWhatsapp").href = whatsappLink("Здравствуйте, интересует " + (product.name || "товар"));
 
 document.getElementById("productModal").style.display = "flex";
