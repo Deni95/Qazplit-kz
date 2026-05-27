@@ -353,9 +353,15 @@ grid-column:1;
 <input id="name" placeholder="Название товара">
 <input id="price" placeholder="Цена, например 4500">
 
-<input id="image_url" placeholder="Ссылка на фото товара">
-<textarea id="description" placeholder="Описание товара"></textarea>
-</div>
+<input type="file"
+id="imageFile"
+accept="image/*">
+
+<input id="image_url"
+placeholder="Ссылка появится автоматически">
+
+<textarea id="description"
+placeholder="Описание товара"></textarea>
 
 <br>
 <button onclick="saveProduct()">Сохранить товар</button>
@@ -383,7 +389,7 @@ grid-column:1;
 <br><br>
 Главное фото должно лежать здесь:
 <br><br>
-<b>uploads/glavnaya.jpg</b>
+<b>uploads/gl1.jpg</b>
 <br><br>
 Если админка находится в папке <b>admin</b>, путь к логотипу должен быть:
 <br><br>
@@ -470,7 +476,29 @@ if(!name){
 status.textContent = "Введите название товара";
 return;
 }
+let image_url =
+document.getElementById("image_url").value;
 
+const file =
+document.getElementById("imageFile").files[0];
+
+if(file){
+
+const fileName =
+Date.now()+"-"+file.name;
+
+await sb.storage
+.from("product-images")
+.upload(fileName,file);
+
+const { data } =
+sb.storage
+.from("product-images")
+.getPublicUrl(fileName);
+
+image_url =
+data.publicUrl;
+}
 const data = {
 name,
 price,
