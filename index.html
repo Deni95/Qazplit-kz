@@ -819,8 +819,9 @@ if(text.length <= limit) return text;
 return text.slice(0, limit).trim() + "...";
 }
 
-function whatsappLink(text){
-return "https://wa.me/77073908307?text=" + encodeURIComponent(text);
+function whatsappLink(){
+  return "https://wa.me/7771233002?text=" + 
+  encodeURIComponent("Здравствуйте, интересует брусчатка");
 }
 
 async function loadProducts(){
