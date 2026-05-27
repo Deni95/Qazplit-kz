@@ -31,17 +31,15 @@ gap:20px;
 .logo{
 display:flex;
 align-items:center;
-gap:16px;
+gap:10px;
 margin-right:auto;
 }
 
 .logo img{
-width:78px;
-height:78px;
+width:95px;
+height:95px;
 object-fit:contain;
-background:white;
-padding:6px;
-border-radius:14px;
+background:none;
 }
 
 .logo-title{
@@ -168,6 +166,11 @@ resize:vertical;
 grid-column:1/3;
 }
 
+input[type="file"]{
+padding:12px;
+cursor:pointer;
+}
+
 button{
 border:none;
 background:linear-gradient(135deg,#e0a326,#c47b0d);
@@ -253,6 +256,14 @@ font-weight:700;
 
 .hidden{display:none}
 
+.preview{
+margin-top:12px;
+max-width:220px;
+border-radius:10px;
+display:none;
+border:1px solid rgba(255,255,255,.15);
+}
+
 @media(max-width:900px){
 .header{
 height:auto;
@@ -293,7 +304,7 @@ grid-column:1;
 
 <header class="header">
 <div class="logo">
-<img src="./uploads/Logonew.png" alt="QAZPLIT">
+<img src="../uploads/Logonew.png" alt="QAZPLIT">
 <div>
 <div class="logo-title">QAZPLIT</div>
 <div class="logo-subtitle">Админ-панель сайта</div>
@@ -353,15 +364,13 @@ grid-column:1;
 <input id="name" placeholder="Название товара">
 <input id="price" placeholder="Цена, например 4500">
 
-<input type="file"
-id="imageFile"
-accept="image/*">
+<input type="file" id="imageFile" accept="image/*">
+<input id="image_url" placeholder="Ссылка на фото появится автоматически">
 
-<input id="image_url"
-placeholder="Ссылка появится автоматически">
+<textarea id="description" placeholder="Описание товара"></textarea>
+</div>
 
-<textarea id="description"
-placeholder="Описание товара"></textarea>
+<img id="previewImage" class="preview">
 
 <br>
 <button onclick="saveProduct()">Сохранить товар</button>
@@ -383,17 +392,19 @@ placeholder="Описание товара"></textarea>
 <div class="panel">
 <h2>Важно</h2>
 <p style="line-height:1.7;color:#ddd">
-Логотип должен лежать здесь:
+Для загрузки фото товаров в Supabase должен быть создан Storage bucket:
+<br><br>
+<b>product-images</b>
+<br><br>
+Bucket должен быть <b>public</b>.
+<br><br>
+Логотип сайта:
 <br><br>
 <b>uploads/Logonew.png</b>
 <br><br>
-Главное фото должно лежать здесь:
+Главное фото:
 <br><br>
-<b>uploads/gl1.jpg</b>
-<br><br>
-Если админка находится в папке <b>admin</b>, путь к логотипу должен быть:
-<br><br>
-<b>../uploads/Logonew.png</b>
+<b>uploads/project21.jpg.jpg</b>
 </p>
 </div>
 </section>
@@ -426,6 +437,49 @@ text = String(text || "");
 return text.length > limit ? text.slice(0, limit) + "..." : text;
 }
 
+document.getElementById("imageFile").addEventListener("change", function(){
+const file = this.files[0];
+const preview = document.getElementById("previewImage");
+
+if(file){
+preview.src = URL.createObjectURL(file);
+preview.style.display = "block";
+} else {
+preview.style.display = "none";
+}
+});
+
+async function uploadProductImage(){
+const fileInput = document.getElementById("imageFile");
+const file = fileInput.files[0];
+
+if(!file){
+return document.getElementById("image_url").value.trim();
+}
+
+const fileExt = file.name.split(".").pop();
+const fileName = Date.now() + "-" + Math.random().toString(36).substring(2) + "." + fileExt;
+const filePath = fileName;
+
+const uploadResult = await sb.storage
+.from("product-images")
+.upload(filePath, file, {
+cacheControl: "3600",
+upsert: false
+});
+
+if(uploadResult.error){
+console.error(uploadResult.error);
+throw new Error("Ошибка загрузки фото. Проверь bucket product-images в Supabase.");
+}
+
+const publicUrlResult = sb.storage
+.from("product-images")
+.getPublicUrl(filePath);
+
+return publicUrlResult.data.publicUrl;
+}
+
 async function loadProducts(){
 const list = document.getElementById("productsList");
 
@@ -450,7 +504,7 @@ return;
 
 list.innerHTML = products.map(p => `
 <div class="product">
-<img src="${p.image_url || "../uploads/glavnaya.jpg"}" alt="${p.name || "Товар"}">
+<img src="${p.image_url || "../uploads/project21.jpg.jpg"}" alt="${p.name || "Товар"}">
 <div class="product-body">
 <h3>${p.name || ""}</h3>
 <p>${shortText(p.description, 90)}</p>
@@ -468,7 +522,6 @@ async function saveProduct(){
 const id = document.getElementById("productId").value;
 const name = document.getElementById("name").value.trim();
 const price = document.getElementById("price").value.trim();
-const image_url = document.getElementById("image_url").value.trim();
 const description = document.getElementById("description").value.trim();
 const status = document.getElementById("status");
 
@@ -476,37 +529,28 @@ if(!name){
 status.textContent = "Введите название товара";
 return;
 }
-let image_url =
-document.getElementById("image_url").value;
 
-const file =
-document.getElementById("imageFile").files[0];
+status.textContent = "Загрузка фото...";
 
-if(file){
+let image_url = "";
 
-const fileName =
-Date.now()+"-"+file.name;
-
-await sb.storage
-.from("product-images")
-.upload(fileName,file);
-
-const { data } =
-sb.storage
-.from("product-images")
-.getPublicUrl(fileName);
-
-image_url =
-data.publicUrl;
+try{
+image_url = await uploadProductImage();
+} catch(error){
+status.textContent = error.message;
+return;
 }
+
 const data = {
-name,
-price,
-image_url,
-description
+name: name,
+price: price,
+image_url: image_url,
+description: description
 };
 
 let result;
+
+status.textContent = "Сохранение товара...";
 
 if(id){
 result = await sb
@@ -521,11 +565,11 @@ result = await sb
 
 if(result.error){
 console.error(result.error);
-status.textContent = "Ошибка сохранения";
+status.textContent = "Ошибка сохранения товара";
 return;
 }
 
-status.textContent = "Сохранено";
+status.textContent = "Товар сохранен";
 clearForm();
 loadProducts();
 }
@@ -540,6 +584,12 @@ document.getElementById("name").value = p.name || "";
 document.getElementById("price").value = p.price || "";
 document.getElementById("image_url").value = p.image_url || "";
 document.getElementById("description").value = p.description || "";
+
+const preview = document.getElementById("previewImage");
+if(p.image_url){
+preview.src = p.image_url;
+preview.style.display = "block";
+}
 
 window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -568,6 +618,8 @@ document.getElementById("name").value = "";
 document.getElementById("price").value = "";
 document.getElementById("image_url").value = "";
 document.getElementById("description").value = "";
+document.getElementById("imageFile").value = "";
+document.getElementById("previewImage").style.display = "none";
 }
 
 loadProducts();
