@@ -31,13 +31,13 @@ gap:20px;
 .logo{
 display:flex;
 align-items:center;
-gap:10px;
+gap:8px;
 margin-right:auto;
 }
 
 .logo img{
-width:95px;
-height:95px;
+width:120px;
+height:120px;
 object-fit:contain;
 background:none;
 }
@@ -166,11 +166,6 @@ resize:vertical;
 grid-column:1/3;
 }
 
-input[type="file"]{
-padding:12px;
-cursor:pointer;
-}
-
 button{
 border:none;
 background:linear-gradient(135deg,#e0a326,#c47b0d);
@@ -180,16 +175,35 @@ padding:14px 20px;
 border-radius:8px;
 cursor:pointer;
 font-size:15px;
+margin-top:10px;
 }
 
 button:hover{opacity:.9}
 
-.btn-delete{
-background:#b71c1c;
+.btn-delete{background:#b71c1c}
+.btn-edit{background:#444}
+
+.status{
+margin-top:12px;
+color:#d99a16;
+font-weight:700;
 }
 
-.btn-edit{
-background:#444;
+.hidden{display:none}
+
+.preview-list{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:12px;
+margin-top:15px;
+}
+
+.preview-list img{
+width:100%;
+height:100px;
+object-fit:cover;
+border-radius:8px;
+border:1px solid rgba(255,255,255,.15);
 }
 
 .products{
@@ -246,22 +260,6 @@ margin-top:14px;
 width:100%;
 padding:13px 8px;
 font-size:15px;
-}
-
-.status{
-margin-top:12px;
-color:#d99a16;
-font-weight:700;
-}
-
-.hidden{display:none}
-
-.preview{
-margin-top:12px;
-max-width:220px;
-border-radius:10px;
-display:none;
-border:1px solid rgba(255,255,255,.15);
 }
 
 @media(max-width:900px){
@@ -335,8 +333,8 @@ grid-column:1;
 </div>
 
 <div class="card">
-<div class="card-number">1</div>
-<div class="card-text">Главное фото</div>
+<div class="card-number">∞</div>
+<div class="card-text">Фото товаров</div>
 </div>
 
 <div class="card">
@@ -353,7 +351,7 @@ grid-column:1;
 
 <section id="productsPage" class="hidden">
 <h1>Каталог товаров</h1>
-<div class="desc">Добавление и редактирование товаров</div>
+<div class="desc">Можно загрузить несколько фото для одного товара</div>
 
 <div class="panel">
 <h2 id="formTitle">Добавить товар</h2>
@@ -364,13 +362,13 @@ grid-column:1;
 <input id="name" placeholder="Название товара">
 <input id="price" placeholder="Цена, например 4500">
 
-<input type="file" id="imageFile" accept="image/*">
-<input id="image_url" placeholder="Ссылка на фото появится автоматически">
+<input type="file" id="imageFiles" accept="image/*" multiple>
+<input id="image_url" placeholder="Главная ссылка появится автоматически">
 
 <textarea id="description" placeholder="Описание товара"></textarea>
 </div>
 
-<img id="previewImage" class="preview">
+<div id="previewList" class="preview-list"></div>
 
 <br>
 <button onclick="saveProduct()">Сохранить товар</button>
@@ -387,24 +385,22 @@ grid-column:1;
 
 <section id="settingsPage" class="hidden">
 <h1>Настройки сайта</h1>
-<div class="desc">Пути к картинкам для сайта</div>
+<div class="desc">Важные настройки Supabase</div>
 
 <div class="panel">
 <h2>Важно</h2>
 <p style="line-height:1.7;color:#ddd">
-Для загрузки фото товаров в Supabase должен быть создан Storage bucket:
+В Supabase Storage должен быть создан bucket:
 <br><br>
 <b>product-images</b>
 <br><br>
-Bucket должен быть <b>public</b>.
+Bucket должен быть <b>Public</b>.
 <br><br>
-Логотип сайта:
+В таблице <b>products</b> должно быть поле:
 <br><br>
-<b>uploads/Logonew.png</b>
+<b>images</b> тип <b>jsonb</b>
 <br><br>
-Главное фото:
-<br><br>
-<b>uploads/project21.jpg.jpg</b>
+Поле <b>image_url</b> оставляем для главной картинки товара.
 </p>
 </div>
 </section>
@@ -437,47 +433,46 @@ text = String(text || "");
 return text.length > limit ? text.slice(0, limit) + "..." : text;
 }
 
-document.getElementById("imageFile").addEventListener("change", function(){
-const file = this.files[0];
-const preview = document.getElementById("previewImage");
+document.getElementById("imageFiles").addEventListener("change", function(){
+const files = this.files;
+const previewList = document.getElementById("previewList");
+previewList.innerHTML = "";
 
-if(file){
-preview.src = URL.createObjectURL(file);
-preview.style.display = "block";
-} else {
-preview.style.display = "none";
-}
+Array.from(files).forEach(file => {
+const img = document.createElement("img");
+img.src = URL.createObjectURL(file);
+previewList.appendChild(img);
+});
 });
 
-async function uploadProductImage(){
-const fileInput = document.getElementById("imageFile");
-const file = fileInput.files[0];
+async function uploadProductImages(){
+const files = document.getElementById("imageFiles").files;
+let urls = [];
 
-if(!file){
-return document.getElementById("image_url").value.trim();
-}
-
+for(const file of files){
 const fileExt = file.name.split(".").pop();
 const fileName = Date.now() + "-" + Math.random().toString(36).substring(2) + "." + fileExt;
-const filePath = fileName;
 
 const uploadResult = await sb.storage
 .from("product-images")
-.upload(filePath, file, {
+.upload(fileName, file, {
 cacheControl: "3600",
 upsert: false
 });
 
 if(uploadResult.error){
 console.error(uploadResult.error);
-throw new Error("Ошибка загрузки фото. Проверь bucket product-images в Supabase.");
+throw new Error("Ошибка загрузки фото. Проверь bucket product-images");
 }
 
 const publicUrlResult = sb.storage
 .from("product-images")
-.getPublicUrl(filePath);
+.getPublicUrl(fileName);
 
-return publicUrlResult.data.publicUrl;
+urls.push(publicUrlResult.data.publicUrl);
+}
+
+return urls;
 }
 
 async function loadProducts(){
@@ -502,20 +497,27 @@ list.innerHTML = "Товаров пока нет";
 return;
 }
 
-list.innerHTML = products.map(p => `
+list.innerHTML = products.map(p => {
+const mainImage = p.image_url || (Array.isArray(p.images) && p.images.length ? p.images[0] : "../uploads/project21.jpg.jpg");
+
+return `
 <div class="product">
-<img src="${p.image_url || "../uploads/project21.jpg.jpg"}" alt="${p.name || "Товар"}">
+<img src="${mainImage}" alt="${p.name || "Товар"}">
 <div class="product-body">
 <h3>${p.name || ""}</h3>
 <p>${shortText(p.description, 90)}</p>
 <div class="price">${p.price || ""} ₸</div>
+<div style="color:#aaa;font-size:13px;">
+Фото: ${Array.isArray(p.images) ? p.images.length : 1}
+</div>
 <div class="actions">
 <button class="btn-edit" onclick="editProduct('${p.id}')">Редактировать</button>
 <button class="btn-delete" onclick="deleteProduct('${p.id}')">Удалить</button>
 </div>
 </div>
 </div>
-`).join("");
+`;
+}).join("");
 }
 
 async function saveProduct(){
@@ -523,6 +525,7 @@ const id = document.getElementById("productId").value;
 const name = document.getElementById("name").value.trim();
 const price = document.getElementById("price").value.trim();
 const description = document.getElementById("description").value.trim();
+const oldImageUrl = document.getElementById("image_url").value.trim();
 const status = document.getElementById("status");
 
 if(!name){
@@ -532,19 +535,30 @@ return;
 
 status.textContent = "Загрузка фото...";
 
-let image_url = "";
+let images = [];
 
 try{
-image_url = await uploadProductImage();
+images = await uploadProductImages();
 } catch(error){
 status.textContent = error.message;
 return;
+}
+
+let image_url = oldImageUrl;
+
+if(images.length > 0){
+image_url = images[0];
+} else if(id){
+const oldProduct = products.find(p => String(p.id) === String(id));
+images = oldProduct && Array.isArray(oldProduct.images) ? oldProduct.images : [];
+image_url = oldProduct ? oldProduct.image_url : oldImageUrl;
 }
 
 const data = {
 name: name,
 price: price,
 image_url: image_url,
+images: images,
 description: description
 };
 
@@ -565,7 +579,7 @@ result = await sb
 
 if(result.error){
 console.error(result.error);
-status.textContent = "Ошибка сохранения товара";
+status.textContent = "Ошибка сохранения. Проверь поле images в Supabase";
 return;
 }
 
@@ -585,11 +599,17 @@ document.getElementById("price").value = p.price || "";
 document.getElementById("image_url").value = p.image_url || "";
 document.getElementById("description").value = p.description || "";
 
-const preview = document.getElementById("previewImage");
-if(p.image_url){
-preview.src = p.image_url;
-preview.style.display = "block";
-}
+const previewList = document.getElementById("previewList");
+previewList.innerHTML = "";
+
+const images = Array.isArray(p.images) && p.images.length ? p.images : [p.image_url];
+
+images.forEach(url => {
+if(!url) return;
+const img = document.createElement("img");
+img.src = url;
+previewList.appendChild(img);
+});
 
 window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -618,8 +638,9 @@ document.getElementById("name").value = "";
 document.getElementById("price").value = "";
 document.getElementById("image_url").value = "";
 document.getElementById("description").value = "";
-document.getElementById("imageFile").value = "";
-document.getElementById("previewImage").style.display = "none";
+document.getElementById("imageFiles").value = "";
+document.getElementById("previewList").innerHTML = "";
+document.getElementById("status").textContent = "";
 }
 
 loadProducts();
