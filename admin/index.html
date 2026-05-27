@@ -191,8 +191,8 @@ background:#444;
 
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:24px;
 }
 
 .product{
@@ -233,8 +233,16 @@ margin:12px 0;
 }
 
 .actions{
-display:flex;
+display:grid;
+grid-template-columns:1fr 1fr;
 gap:10px;
+margin-top:14px;
+}
+
+.actions button{
+width:100%;
+padding:13px 8px;
+font-size:15px;
 }
 
 .status{
